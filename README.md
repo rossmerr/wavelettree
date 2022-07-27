@@ -1,1 +1,1 @@
-# wavelettree
+# Wavelet Tree
