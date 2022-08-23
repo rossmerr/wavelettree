@@ -6,6 +6,10 @@ type WaveletTree struct {
 }
 
 func NewWaveletTree(value string) *WaveletTree {
+	return NewBalancedWaveletTree(value)
+}
+
+func NewBalancedWaveletTree(value string) *WaveletTree {
 	vector, left, right, _ := NewVectorFromString(value)
 	root := NewBinaryTree(vector, left, right)
 	tree := &WaveletTree{
