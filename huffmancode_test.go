@@ -6,9 +6,6 @@ import (
 )
 
 func TestNewHuffmanCode(t *testing.T) {
-	type args struct {
-		value string
-	}
 	tests := []struct {
 		name  string
 		value string
@@ -20,7 +17,7 @@ func TestNewHuffmanCode(t *testing.T) {
 			want: &HuffmanCode{
 				Frequency: 15,
 				Left: &HuffmanCode{
-					Key:       byte('C'),
+					Value:     'C',
 					Frequency: 6,
 				},
 				Right: &HuffmanCode{
@@ -29,16 +26,16 @@ func TestNewHuffmanCode(t *testing.T) {
 						Frequency: 4,
 						Left: &HuffmanCode{
 							Frequency: 1,
-							Key:       byte('B'),
+							Value:     'B',
 						},
 						Right: &HuffmanCode{
 							Frequency: 3,
-							Key:       byte('D'),
+							Value:     'D',
 						},
 					},
 					Right: &HuffmanCode{
 						Frequency: 5,
-						Key:       byte('A'),
+						Value:     'A',
 					},
 				},
 			},

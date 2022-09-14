@@ -41,6 +41,7 @@ func TestWaveletTree_Access(t *testing.T) {
 }
 
 func TestWaveletTree_Rank(t *testing.T) {
+
 	type args struct {
 		c      rune
 		offset int
@@ -66,14 +67,14 @@ func TestWaveletTree_Rank(t *testing.T) {
 		{
 			name: "00110110110",
 			wt: func() *WaveletTree {
-				root := &BinaryTree{
+				root := &Node{
 					vector: []byte{0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0},
 				}
-				level1 := &BinaryTree{
+				level1 := &Node{
 					vector: []byte{1, 0, 0, 0, 0},
 					parent: root,
 				}
-				level2 := &BinaryTree{
+				level2 := &Node{
 					value:  'i',
 					parent: level1,
 				}
@@ -128,14 +129,14 @@ func TestWaveletTree_Select(t *testing.T) {
 		{
 			name: "00110110110",
 			wt: func() *WaveletTree {
-				root := &BinaryTree{
+				root := &Node{
 					vector: []byte{0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0},
 				}
-				level1 := &BinaryTree{
+				level1 := &Node{
 					vector: []byte{1, 1, 1, 1, 0, 0},
 					parent: root,
 				}
-				level2 := &BinaryTree{
+				level2 := &Node{
 					value:  's',
 					parent: level1,
 				}

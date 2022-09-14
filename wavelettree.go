@@ -10,11 +10,25 @@ func NewWaveletTree(value string) *WaveletTree {
 }
 
 func NewBalancedWaveletTree(value string) *WaveletTree {
-	vector, left, right, _ := NewVectorFromString(value)
-	root := NewBinaryTree(vector, left, right)
+	br := NewBinaryTree(value)
+	prefix := br.Prefix()
+	root := newNode([]byte(value), prefix, nil, 0)
+
 	tree := &WaveletTree{
 		root:   root,
-		prefix: root.Prefix(),
+		prefix: prefix,
+	}
+
+	return tree
+}
+
+func NewHuffmanCodeWaveletTree(value string) *WaveletTree {
+	hc := NewHuffmanCode(value)
+	prefix := hc.Prefix()
+	root := newNode([]byte(value), prefix, nil, 0)
+	tree := &WaveletTree{
+		root:   root,
+		prefix: prefix,
 	}
 
 	return tree

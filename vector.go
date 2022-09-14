@@ -2,32 +2,30 @@ package wavelettree
 
 type Vector []byte
 
-func NewVector(data []byte) (vector Vector, left, right []byte, end bool) {
-	keys := make(map[byte]int)
-
-	for _, entry := range data {
-		if _, ok := keys[entry]; !ok {
-			keys[entry] = len(keys)
-		}
-
-		i := keys[entry]
-
-		if int(i)%2 == Left {
-			vector = append(vector, Left)
-			left = append(left, entry)
-
-		} else {
-			vector = append(vector, Right)
-			right = append(right, entry)
-
-		}
-	}
-
-	return vector, left, right, len(keys) == 1
+func NewVector(data []byte, prefix map[rune]Vector, depth int) (vector Vector, left, right []byte, ok bool) {
+	return NewVectorFromString(string(data), prefix, depth)
 }
 
-func NewVectorFromString(s string) (vector Vector, left, right []byte, end bool) {
-	return NewVector([]byte(s))
+func NewVectorFromString(s string, prefix map[rune]Vector, depth int) (vector Vector, left, right []byte, ok bool) {
+	ok = true
+	for _, entry := range s {
+
+		partitions := prefix[entry]
+
+		if depth >= len(partitions) {
+			ok = false
+			return
+		}
+
+		c := partitions[depth]
+		vector = append(vector, c)
+		if c == Left {
+			left = append(left, byte(entry))
+		} else {
+			right = append(right, byte(entry))
+		}
+	}
+	return
 }
 
 func (v Vector) Rank(i byte, offset int) int {

@@ -5,51 +5,74 @@ import "sort"
 type HuffmanCode struct {
 	Left      *HuffmanCode
 	Right     *HuffmanCode
-	Key       byte
+	Value     rune
 	Frequency int
 }
 
 func NewHuffmanCode(value string) *HuffmanCode {
-	return newHuffmanCode(value)
+	runeFrequencies := frequencyCount(value)
+	huffmanList := rankByRuneCount(runeFrequencies)
+	return buildHuffmanTree(huffmanList)
 }
 
-func newHuffmanCode(value string) *HuffmanCode {
-	wordFrequencies := frequencyCount(value)
-	pairList := rankByRuneCount(wordFrequencies)
-	tree := buildTree(pairList)
-
-	return tree
+func (s *HuffmanCode) isLeaf() bool {
+	return s.Value == -1
 }
 
-func buildTree(pairList PairList) *HuffmanCode {
+func (s *HuffmanCode) Prefix() map[rune]Vector {
+	prefix := map[rune]Vector{}
+	left := s.Left
+	if left.isLeaf() {
+		prefix[left.Value] = []byte{Left}
+	} else {
+		m := left.Prefix()
+		for k, v := range m {
+			prefix[k] = append([]byte{Left}, v...)
+		}
+	}
+
+	right := s.Right
+	if right.isLeaf() {
+		prefix[right.Value] = []byte{Right}
+	} else {
+		m := right.Prefix()
+		for k, v := range m {
+			prefix[k] = append([]byte{Right}, v...)
+		}
+	}
+
+	return prefix
+}
+
+func buildHuffmanTree(list huffmanList) *HuffmanCode {
 	for {
-		last := pairList[0]
-		pairList = pairList[1:]
+		first := list[0]
+		list = list[1:]
 
-		if len(pairList) == 0 {
-			return last
+		if len(list) == 0 {
+			return first
 		}
 
-		penultimate := pairList[0]
-		pairList = pairList[1:]
+		second := list[0]
+		list = list[1:]
 
-		sum := last.Frequency + penultimate.Frequency
+		sum := first.Frequency + second.Frequency
 
 		t := &HuffmanCode{
 			Frequency: sum,
-			Left:      last,
-			Right:     penultimate,
+			Left:      first,
+			Right:     second,
 		}
 
-		if len(pairList) == 0 {
+		if len(list) == 0 {
 			return t
 		}
 
-		for _, pair := range pairList {
+		for _, pair := range list {
 			if pair.Frequency >= sum {
-				pairList = append([]*HuffmanCode{t}, pairList...)
+				list = append([]*HuffmanCode{t}, list...)
 			} else {
-				pairList = append(pairList, t)
+				list = append(list, t)
 
 			}
 			break
@@ -58,33 +81,33 @@ func buildTree(pairList PairList) *HuffmanCode {
 	}
 }
 
-func frequencyCount(value string) map[byte]int {
-	wordFrequencies := make(map[byte]int)
+func frequencyCount(value string) map[rune]int {
+	runeFrequencies := make(map[rune]int)
 	for i := range value {
 		r := value[i]
-		if _, ok := wordFrequencies[r]; ok {
-			wordFrequencies[r] = wordFrequencies[r] + 1
+		if _, ok := runeFrequencies[rune(r)]; ok {
+			runeFrequencies[rune(r)] = runeFrequencies[rune(r)] + 1
 		} else {
-			wordFrequencies[r] = 1
+			runeFrequencies[rune(r)] = 1
 		}
 	}
 
-	return wordFrequencies
+	return runeFrequencies
 }
 
-func rankByRuneCount(wordFrequencies map[byte]int) PairList {
-	pl := make(PairList, len(wordFrequencies))
+func rankByRuneCount(runeFrequencies map[rune]int) huffmanList {
+	list := make(huffmanList, len(runeFrequencies))
 	i := 0
-	for k, v := range wordFrequencies {
-		pl[i] = &HuffmanCode{Key: k, Frequency: v}
+	for k, v := range runeFrequencies {
+		list[i] = &HuffmanCode{Value: k, Frequency: v}
 		i++
 	}
-	sort.Sort(pl)
-	return pl
+	sort.Sort(list)
+	return list
 }
 
-type PairList []*HuffmanCode
+type huffmanList []*HuffmanCode
 
-func (p PairList) Len() int           { return len(p) }
-func (p PairList) Less(i, j int) bool { return p[i].Frequency < p[j].Frequency }
-func (p PairList) Swap(i, j int)      { p[i], p[j] = p[j], p[i] }
+func (p huffmanList) Len() int           { return len(p) }
+func (p huffmanList) Less(i, j int) bool { return p[i].Frequency < p[j].Frequency }
+func (p huffmanList) Swap(i, j int)      { p[i], p[j] = p[j], p[i] }

@@ -1,11 +1,9 @@
 package wavelettree
 
 type BinaryTree struct {
-	parent *BinaryTree
-	left   *BinaryTree
-	right  *BinaryTree
-	value  byte
-	vector Vector
+	Left  *BinaryTree
+	Right *BinaryTree
+	Value *byte
 }
 
 const (
@@ -13,77 +11,77 @@ const (
 	Right = 1
 )
 
-func NewBinaryTree(v Vector, left, right []byte) *BinaryTree {
-	return newBinaryTree(v, left, right, nil)
+func NewBinaryTree(value string) *BinaryTree {
+	runeFrequencies := binaryCount(value)
+	binaryList := rankByBinaryCount(runeFrequencies)
+	return buildBinaryTree(value, binaryList)
 }
 
-func newBinaryTree(v Vector, left, right []byte, parent *BinaryTree) *BinaryTree {
-	t := &BinaryTree{
-		vector: v,
-		parent: parent,
-	}
+func binaryCount(value string) map[byte]int {
+	runeFrequencies := make(map[byte]int)
 
-	if len(left) > 0 {
-		t.insertLeft(left)
-	}
-	if len(right) > 0 {
-		t.insertRight(right)
-	}
-	return t
-}
-
-func (t *BinaryTree) isLeaf() bool {
-	return t.vector == nil
-}
-
-func (t *BinaryTree) insertLeft(data []byte) {
-	vector, left, right, end := NewVector(data)
-	if end {
-		t.left = &BinaryTree{
-			value:  data[0],
-			parent: t,
+	for _, entry := range value {
+		if _, ok := runeFrequencies[byte(entry)]; !ok {
+			runeFrequencies[byte(entry)] = len(runeFrequencies)
 		}
-		return
 	}
 
-	t.left = newBinaryTree(vector, left, right, t)
-
+	return runeFrequencies
 }
 
-func (t *BinaryTree) insertRight(data []byte) {
-	vector, left, right, end := NewVector(data)
-	if end {
-		t.right = &BinaryTree{
-			value:  data[0],
-			parent: t,
+type binaryList []*BinaryTree
+
+func rankByBinaryCount(runeFrequencies map[byte]int) binaryList {
+
+	list := make(binaryList, len(runeFrequencies))
+	i := 0
+	for k, _ := range runeFrequencies {
+		v := k
+		list[i] = &BinaryTree{
+			Value: &v,
 		}
-		return
+		i++
 	}
 
-	t.right = newBinaryTree(vector, left, right, t)
+	return list
+}
+
+func buildBinaryTree(value string, list binaryList) *BinaryTree {
+
+	for {
+		first := list[0]
+		list = list[1:]
+
+		if len(list) == 0 {
+			return first
+		}
+
+		second := list[0]
+		list = list[1:]
+
+		t := &BinaryTree{
+			Left:  first,
+			Right: second,
+		}
+
+		if len(list) == 0 {
+			return t
+		}
+
+		list = append(list, t)
+	}
 
 }
 
-func (t *BinaryTree) Access(i int) rune {
-	if t.isLeaf() {
-		return rune(t.value)
-	}
-
-	c := t.vector[i]
-	if c == Left {
-		rank := t.vector.Rank(0, i)
-		return t.left.Access(rank)
-	} else {
-		rank := t.vector.Rank(1, i)
-		return t.right.Access(rank)
-	}
+func (s *BinaryTree) isLeaf() bool {
+	return s.Value != nil
 }
 
-func (t *BinaryTree) Prefix() map[rune]Vector {
+func (s *BinaryTree) Prefix() map[rune]Vector {
 	prefix := map[rune]Vector{}
-	left := t.left
+	left := s.Left
 	if left.isLeaf() {
-		prefix[rune(left.value)] = []byte{Left}
+		prefix[rune(*left.Value)] = []byte{Left}
 	} else {
 		m := left.Prefix()
 		for k, v := range m {
@@ -91,9 +89,9 @@ func (t *BinaryTree) Prefix() map[rune]Vector {
 		}
 	}
 
-	right := t.right
+	right := s.Right
 	if right.isLeaf() {
-		prefix[rune(right.value)] = []byte{Right}
+		prefix[rune(*right.Value)] = []byte{Right}
 	} else {
 		m := right.Prefix()
 		for k, v := range m {
@@ -102,50 +100,4 @@ func (t *BinaryTree) Prefix() map[rune]Vector {
 	}
 
 	return prefix
-}
-
-func (t *BinaryTree) Rank(prefix Vector, offset int) int {
-	if t.isLeaf() {
-		return offset
-	}
-
-	c := prefix[0]
-
-	rank := t.vector.Rank(c, offset)
-
-	if c == Left {
-		return t.left.Rank(prefix[1:], rank)
-	} else {
-		return t.right.Rank(prefix[1:], rank)
-	}
-}
-
-func (t *BinaryTree) Walk(prefix Vector) Tree {
-
-	if t.isLeaf() {
-		return t
-	}
-
-	c := prefix[0]
-	if c == Left {
-		return t.left.Walk(prefix[1:])
-	} else {
-		return t.right.Walk(prefix[1:])
-
-	}
-}
-
-func (t *BinaryTree) Select(prefix Vector, rank int) int {
-
-	if t.isLeaf() {
-		return t.parent.Select(prefix, rank)
-	}
-	i := prefix[len(prefix)-1]
-	r := t.vector.Select(i, rank)
-
-	if t.parent != nil {
-		return t.parent.Select(prefix[:len(prefix)-1], r)
-	}
-	return r
-
 }
