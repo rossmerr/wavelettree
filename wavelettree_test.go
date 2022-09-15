@@ -5,35 +5,41 @@ import (
 )
 
 func TestWaveletTree_Access(t *testing.T) {
-	type fields struct {
-		root Tree
-	}
-	type args struct {
-		i int
-	}
 	tests := []struct {
-		name  string
-		value string
-		i     int
-		want  rune
+		name string
+		i    int
+		want rune
+		wt   *WaveletTree
 	}{
 		{
-			name:  "mississippi",
-			value: "mississippi",
-			i:     4,
-			want:  rune('i'),
+			name: "binarytree mississippi",
+			i:    4,
+			want: rune('i'),
+			wt:   NewWaveletTree("mississippi"),
 		},
 		{
-			name:  "mississippi",
-			value: "mississippi",
-			i:     8,
-			want:  rune('p'),
+			name: "binarytree mississippi",
+			i:    8,
+			want: rune('p'),
+			wt:   NewWaveletTree("mississippi"),
+		},
+		{
+			name: "huffman mississippi",
+			i:    4,
+			want: rune('i'),
+			wt:   NewHuffmanCodeWaveletTree("mississippi"),
+		},
+		{
+			name: "huffman mississippi",
+			i:    8,
+			want: rune('p'),
+			wt:   NewHuffmanCodeWaveletTree("mississippi"),
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			wt := NewWaveletTree(tt.value)
-			if got := wt.Access(tt.i); got != tt.want {
+
+			if got := tt.wt.Access(tt.i); got != tt.want {
 				t.Errorf("WaveletTree.Access() = %v, want %v", got, tt.want)
 			}
 		})
@@ -53,9 +59,21 @@ func TestWaveletTree_Rank(t *testing.T) {
 		want int
 	}{
 		{
-			name: "mississippi",
+			name: "binarytree mississippi",
 			wt: func() *WaveletTree {
 				return NewWaveletTree("mississippi")
+
+			}(),
+			args: args{
+				c:      'i',
+				offset: 6,
+			},
+			want: 2,
+		},
+		{
+			name: "huffman mississippi",
+			wt: func() *WaveletTree {
+				return NewHuffmanCodeWaveletTree("mississippi")
 
 			}(),
 			args: args{
@@ -74,8 +92,9 @@ func TestWaveletTree_Rank(t *testing.T) {
 					vector: []byte{1, 0, 0, 0, 0},
 					parent: root,
 				}
+				i := byte('i')
 				level2 := &Node{
-					value:  'i',
+					value:  &i,
 					parent: level1,
 				}
 				level1.left = level2
@@ -116,9 +135,20 @@ func TestWaveletTree_Select(t *testing.T) {
 		want int
 	}{
 		{
-			name: "mississippi",
+			name: "binarytree mississippi",
 			wt: func() *WaveletTree {
 				return NewWaveletTree("mississippi")
+			}(),
+			args: args{
+				c:    's',
+				rank: 3,
+			},
+			want: 6,
+		},
+		{
+			name: "huffman mississippi",
+			wt: func() *WaveletTree {
+				return NewHuffmanCodeWaveletTree("mississippi")
 			}(),
 			args: args{
 				c:    's',
@@ -136,8 +166,9 @@ func TestWaveletTree_Select(t *testing.T) {
 					vector: []byte{1, 1, 1, 1, 0, 0},
 					parent: root,
 				}
+				s := byte('s')
 				level2 := &Node{
-					value:  's',
+					value:  &s,
 					parent: level1,
 				}
 				level1.right = level2

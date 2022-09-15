@@ -17,7 +17,7 @@ func TestNewHuffmanCode(t *testing.T) {
 			want: &HuffmanCode{
 				Frequency: 15,
 				Left: &HuffmanCode{
-					Value:     'C',
+					Value:     &[]byte("C")[0],
 					Frequency: 6,
 				},
 				Right: &HuffmanCode{
@@ -26,16 +26,16 @@ func TestNewHuffmanCode(t *testing.T) {
 						Frequency: 4,
 						Left: &HuffmanCode{
 							Frequency: 1,
-							Value:     'B',
+							Value:     &[]byte("B")[0],
 						},
 						Right: &HuffmanCode{
 							Frequency: 3,
-							Value:     'D',
+							Value:     &[]byte("D")[0],
 						},
 					},
 					Right: &HuffmanCode{
 						Frequency: 5,
-						Value:     'A',
+						Value:     &[]byte("A")[0],
 					},
 				},
 			},

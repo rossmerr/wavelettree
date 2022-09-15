@@ -35,7 +35,7 @@ func rankByBinaryCount(runeFrequencies map[byte]int) binaryList {
 
 	list := make(binaryList, len(runeFrequencies))
 	i := 0
-	for k, _ := range runeFrequencies {
+	for k := range runeFrequencies {
 		v := k
 		list[i] = &BinaryTree{
 			Value: &v,

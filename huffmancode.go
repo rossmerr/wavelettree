@@ -5,7 +5,7 @@ import "sort"
 type HuffmanCode struct {
 	Left      *HuffmanCode
 	Right     *HuffmanCode
-	Value     rune
+	Value     *byte
 	Frequency int
 }
 
@@ -16,14 +16,14 @@ func NewHuffmanCode(value string) *HuffmanCode {
 }
 
 func (s *HuffmanCode) isLeaf() bool {
-	return s.Value == -1
+	return s.Value != nil
 }
 
 func (s *HuffmanCode) Prefix() map[rune]Vector {
 	prefix := map[rune]Vector{}
 	left := s.Left
 	if left.isLeaf() {
-		prefix[left.Value] = []byte{Left}
+		prefix[rune(*left.Value)] = []byte{Left}
 	} else {
 		m := left.Prefix()
 		for k, v := range m {
@@ -33,7 +33,7 @@ func (s *HuffmanCode) Prefix() map[rune]Vector {
 
 	right := s.Right
 	if right.isLeaf() {
-		prefix[right.Value] = []byte{Right}
+		prefix[rune(*right.Value)] = []byte{Right}
 	} else {
 		m := right.Prefix()
 		for k, v := range m {
@@ -81,25 +81,26 @@ func buildHuffmanTree(list huffmanList) *HuffmanCode {
 	}
 }
 
-func frequencyCount(value string) map[rune]int {
-	runeFrequencies := make(map[rune]int)
+func frequencyCount(value string) map[byte]int {
+	runeFrequencies := make(map[byte]int)
 	for i := range value {
 		r := value[i]
-		if _, ok := runeFrequencies[rune(r)]; ok {
-			runeFrequencies[rune(r)] = runeFrequencies[rune(r)] + 1
+		if _, ok := runeFrequencies[r]; ok {
+			runeFrequencies[r] = runeFrequencies[r] + 1
 		} else {
-			runeFrequencies[rune(r)] = 1
+			runeFrequencies[r] = 1
 		}
 	}
 
 	return runeFrequencies
 }
 
-func rankByRuneCount(runeFrequencies map[rune]int) huffmanList {
+func rankByRuneCount(runeFrequencies map[byte]int) huffmanList {
 	list := make(huffmanList, len(runeFrequencies))
 	i := 0
-	for k, v := range runeFrequencies {
-		list[i] = &HuffmanCode{Value: k, Frequency: v}
+	for k, f := range runeFrequencies {
+		v := k
+		list[i] = &HuffmanCode{Value: &v, Frequency: f}
 		i++
 	}
 	sort.Sort(list)
