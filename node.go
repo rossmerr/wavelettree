@@ -4,7 +4,7 @@ type Node struct {
 	parent *Node
 	left   *Node
 	right  *Node
-	value  byte
+	value  *byte
 	vector Vector
 }
 
@@ -28,7 +28,7 @@ func newNode(data []byte, prefix map[rune]Vector, parent *Node, depth int) *Node
 			t.left = n
 		} else {
 			t.left = &Node{
-				value:  left[0],
+				value:  &left[0],
 				parent: t,
 			}
 		}
@@ -40,7 +40,7 @@ func newNode(data []byte, prefix map[rune]Vector, parent *Node, depth int) *Node
 			t.right = n
 		} else {
 			t.right = &Node{
-				value:  right[0],
+				value:  &right[0],
 				parent: t,
 			}
 		}
@@ -54,7 +54,7 @@ func (t *Node) isLeaf() bool {
 
 func (t *Node) Access(i int) rune {
 	if t.isLeaf() {
-		return rune(t.value)
+		return rune(*t.value)
 	}
 
 	c := t.vector[i]
