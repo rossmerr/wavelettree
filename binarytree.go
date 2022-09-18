@@ -72,8 +72,8 @@ func (s *BinaryTree) isLeaf() bool {
 	return s.Value != nil
 }
 
-func (s *BinaryTree) Prefix() map[rune][]bool {
-	prefix := map[rune][]bool{}
+func (s *BinaryTree) Prefix() map[rune]BitVector {
+	prefix := map[rune]BitVector{}
 	left := s.Left
 	if left.isLeaf() {
 		prefix[rune(*left.Value)] = []bool{false}

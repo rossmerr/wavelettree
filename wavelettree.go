@@ -1,8 +1,9 @@
 package wavelettree
 
 type WaveletTree struct {
-	root   Tree
-	prefix map[rune][]bool
+	root   *Node
+	prefix map[rune]BitVector
+	n      int // Length of the root bitvector
 }
 
 func NewWaveletTree(value string) *WaveletTree {
@@ -17,6 +18,7 @@ func NewBalancedWaveletTree(value string) *WaveletTree {
 	tree := &WaveletTree{
 		root:   root,
 		prefix: prefix,
+		n:      root.Length(),
 	}
 
 	return tree
@@ -29,6 +31,7 @@ func NewHuffmanCodeWaveletTree(value string) *WaveletTree {
 	tree := &WaveletTree{
 		root:   root,
 		prefix: prefix,
+		n:      root.Length(),
 	}
 
 	return tree

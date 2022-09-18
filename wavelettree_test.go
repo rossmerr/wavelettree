@@ -92,16 +92,16 @@ func TestWaveletTree_Rank(t *testing.T) {
 					vector: []bool{true, false, false, false, false},
 					parent: root,
 				}
-				i := byte('i')
+				// i := byte('i')
 				level2 := &Node{
-					value:  &i,
+					// value:  &i,
 					parent: level1,
 				}
 				level1.left = level2
 				root.left = level1
 				wt := &WaveletTree{
 					root: root,
-					prefix: map[rune][]bool{
+					prefix: map[rune]BitVector{
 						'i': {false, false},
 					},
 				}
@@ -166,16 +166,16 @@ func TestWaveletTree_Select(t *testing.T) {
 					vector: []bool{true, true, true, true, false, false},
 					parent: root,
 				}
-				s := byte('s')
+				// s := byte('s')
 				level2 := &Node{
-					value:  &s,
+					// value:  &s,
 					parent: level1,
 				}
 				level1.right = level2
 				root.right = level1
 				wt := &WaveletTree{
 					root: root,
-					prefix: map[rune][]bool{
+					prefix: map[rune]BitVector{
 						's': {true, true},
 					},
 				}

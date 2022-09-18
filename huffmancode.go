@@ -19,8 +19,8 @@ func (s *HuffmanCode) isLeaf() bool {
 	return s.Value != nil
 }
 
-func (s *HuffmanCode) Prefix() map[rune][]bool {
-	prefix := map[rune][]bool{}
+func (s *HuffmanCode) Prefix() map[rune]BitVector {
+	prefix := map[rune]BitVector{}
 	left := s.Left
 	if left.isLeaf() {
 		prefix[rune(*left.Value)] = []bool{false}

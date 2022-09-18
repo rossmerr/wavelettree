@@ -2,11 +2,11 @@ package wavelettree
 
 type BitVector []bool
 
-func NewVector(data []byte, prefix map[rune][]bool, depth int) (vector BitVector, left, right []byte, ok bool) {
+func NewVector(data []byte, prefix map[rune]BitVector, depth int) (vector BitVector, left, right []byte, ok bool) {
 	return NewVectorFromString(string(data), prefix, depth)
 }
 
-func NewVectorFromString(s string, prefix map[rune][]bool, depth int) (vector BitVector, left, right []byte, ok bool) {
+func NewVectorFromString(s string, prefix map[rune]BitVector, depth int) (vector BitVector, left, right []byte, ok bool) {
 	ok = true
 	for _, entry := range s {
 
@@ -54,4 +54,14 @@ func (v BitVector) Select(i bool, rank int) int {
 	}
 
 	return 0
+}
+
+func (v BitVector) Concat(vectors []BitVector) BitVector {
+	vector := []bool{}
+	vector = append(vector, v...)
+	for _, v := range vectors {
+		vector = append(vector, v...)
+	}
+
+	return vector
 }
