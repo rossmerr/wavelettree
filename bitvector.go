@@ -1,12 +1,12 @@
 package wavelettree
 
-type Vector []byte
+type BitVector []bool
 
-func NewVector(data []byte, prefix map[rune]Vector, depth int) (vector Vector, left, right []byte, ok bool) {
+func NewVector(data []byte, prefix map[rune][]bool, depth int) (vector BitVector, left, right []byte, ok bool) {
 	return NewVectorFromString(string(data), prefix, depth)
 }
 
-func NewVectorFromString(s string, prefix map[rune]Vector, depth int) (vector Vector, left, right []byte, ok bool) {
+func NewVectorFromString(s string, prefix map[rune][]bool, depth int) (vector BitVector, left, right []byte, ok bool) {
 	ok = true
 	for _, entry := range s {
 
@@ -19,7 +19,7 @@ func NewVectorFromString(s string, prefix map[rune]Vector, depth int) (vector Ve
 
 		c := partitions[depth]
 		vector = append(vector, c)
-		if c == Left {
+		if c == false {
 			left = append(left, byte(entry))
 		} else {
 			right = append(right, byte(entry))
@@ -28,7 +28,7 @@ func NewVectorFromString(s string, prefix map[rune]Vector, depth int) (vector Ve
 	return
 }
 
-func (v Vector) Rank(i byte, offset int) int {
+func (v BitVector) Rank(i bool, offset int) int {
 	rank := 0
 
 	for _, e := range v[:offset] {
@@ -41,7 +41,7 @@ func (v Vector) Rank(i byte, offset int) int {
 	return rank
 }
 
-func (v Vector) Select(i byte, rank int) int {
+func (v BitVector) Select(i bool, rank int) int {
 	offset := 0
 	for c, e := range v {
 		if offset == rank {

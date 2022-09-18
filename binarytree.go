@@ -6,11 +6,6 @@ type BinaryTree struct {
 	Value *byte
 }
 
-const (
-	Left  = 0
-	Right = 1
-)
-
 func NewBinaryTree(value string) *BinaryTree {
 	runeFrequencies := binaryCount(value)
 	binaryList := rankByBinaryCount(runeFrequencies)
@@ -77,25 +72,25 @@ func (s *BinaryTree) isLeaf() bool {
 	return s.Value != nil
 }
 
-func (s *BinaryTree) Prefix() map[rune]Vector {
-	prefix := map[rune]Vector{}
+func (s *BinaryTree) Prefix() map[rune][]bool {
+	prefix := map[rune][]bool{}
 	left := s.Left
 	if left.isLeaf() {
-		prefix[rune(*left.Value)] = []byte{Left}
+		prefix[rune(*left.Value)] = []bool{false}
 	} else {
 		m := left.Prefix()
 		for k, v := range m {
-			prefix[k] = append([]byte{Left}, v...)
+			prefix[k] = append([]bool{false}, v...)
 		}
 	}
 
 	right := s.Right
 	if right.isLeaf() {
-		prefix[rune(*right.Value)] = []byte{Right}
+		prefix[rune(*right.Value)] = []bool{true}
 	} else {
 		m := right.Prefix()
 		for k, v := range m {
-			prefix[k] = append([]byte{Right}, v...)
+			prefix[k] = append([]bool{true}, v...)
 		}
 	}
 

@@ -5,10 +5,10 @@ type Node struct {
 	left   *Node
 	right  *Node
 	value  *byte
-	vector Vector
+	vector BitVector
 }
 
-func newNode(data []byte, prefix map[rune]Vector, parent *Node, depth int) *Node {
+func newNode(data []byte, prefix map[rune][]bool, parent *Node, depth int) *Node {
 
 	vector, left, right, ok := NewVector(data, prefix, depth)
 
@@ -58,16 +58,16 @@ func (t *Node) Access(i int) rune {
 	}
 
 	c := t.vector[i]
-	if c == Left {
-		rank := t.vector.Rank(0, i)
+	rank := t.vector.Rank(c, i)
+
+	if c == false {
 		return t.left.Access(rank)
 	} else {
-		rank := t.vector.Rank(1, i)
 		return t.right.Access(rank)
 	}
 }
 
-func (t *Node) Rank(prefix Vector, offset int) int {
+func (t *Node) Rank(prefix BitVector, offset int) int {
 	if t.isLeaf() {
 		return offset
 	}
@@ -76,21 +76,21 @@ func (t *Node) Rank(prefix Vector, offset int) int {
 
 	rank := t.vector.Rank(c, offset)
 
-	if c == Left {
+	if c == false {
 		return t.left.Rank(prefix[1:], rank)
 	} else {
 		return t.right.Rank(prefix[1:], rank)
 	}
 }
 
-func (t *Node) Walk(prefix Vector) Tree {
+func (t *Node) Walk(prefix BitVector) Tree {
 
 	if t.isLeaf() {
 		return t
 	}
 
 	c := prefix[0]
-	if c == Left {
+	if c == false {
 		return t.left.Walk(prefix[1:])
 	} else {
 		return t.right.Walk(prefix[1:])
@@ -98,7 +98,7 @@ func (t *Node) Walk(prefix Vector) Tree {
 	}
 }
 
-func (t *Node) Select(prefix Vector, rank int) int {
+func (t *Node) Select(prefix BitVector, rank int) int {
 
 	if t.isLeaf() {
 		return t.parent.Select(prefix, rank)

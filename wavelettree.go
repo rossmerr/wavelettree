@@ -2,7 +2,7 @@ package wavelettree
 
 type WaveletTree struct {
 	root   Tree
-	prefix map[rune]Vector
+	prefix map[rune][]bool
 }
 
 func NewWaveletTree(value string) *WaveletTree {

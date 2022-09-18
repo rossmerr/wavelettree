@@ -86,10 +86,10 @@ func TestWaveletTree_Rank(t *testing.T) {
 			name: "00110110110",
 			wt: func() *WaveletTree {
 				root := &Node{
-					vector: []byte{0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0},
+					vector: []bool{false, false, true, true, false, true, true, false, true, true, false},
 				}
 				level1 := &Node{
-					vector: []byte{1, 0, 0, 0, 0},
+					vector: []bool{true, false, false, false, false},
 					parent: root,
 				}
 				i := byte('i')
@@ -101,8 +101,8 @@ func TestWaveletTree_Rank(t *testing.T) {
 				root.left = level1
 				wt := &WaveletTree{
 					root: root,
-					prefix: map[rune]Vector{
-						'i': []byte{0, 0},
+					prefix: map[rune][]bool{
+						'i': {false, false},
 					},
 				}
 				return wt
@@ -160,10 +160,10 @@ func TestWaveletTree_Select(t *testing.T) {
 			name: "00110110110",
 			wt: func() *WaveletTree {
 				root := &Node{
-					vector: []byte{0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0},
+					vector: []bool{false, false, true, true, false, true, true, false, true, true, false},
 				}
 				level1 := &Node{
-					vector: []byte{1, 1, 1, 1, 0, 0},
+					vector: []bool{true, true, true, true, false, false},
 					parent: root,
 				}
 				s := byte('s')
@@ -175,8 +175,8 @@ func TestWaveletTree_Select(t *testing.T) {
 				root.right = level1
 				wt := &WaveletTree{
 					root: root,
-					prefix: map[rune]Vector{
-						's': []byte{1, 1},
+					prefix: map[rune][]bool{
+						's': {true, true},
 					},
 				}
 				return wt
