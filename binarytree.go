@@ -1,9 +1,15 @@
 package wavelettree
 
+import (
+	"sort"
+
+	"github.com/rossmerr/bitvector"
+)
+
 type BinaryTree struct {
 	Left  *BinaryTree
 	Right *BinaryTree
-	Value *byte
+	Value *rune
 }
 
 func NewBinaryTree(value string) *BinaryTree {
@@ -12,12 +18,12 @@ func NewBinaryTree(value string) *BinaryTree {
 	return buildBinaryTree(value, binaryList)
 }
 
-func binaryCount(value string) map[byte]int {
-	runeFrequencies := make(map[byte]int)
+func binaryCount(value string) map[rune]int {
+	runeFrequencies := make(map[rune]int)
 
 	for _, entry := range value {
-		if _, ok := runeFrequencies[byte(entry)]; !ok {
-			runeFrequencies[byte(entry)] = len(runeFrequencies)
+		if _, ok := runeFrequencies[entry]; !ok {
+			runeFrequencies[entry] = len(runeFrequencies)
 		}
 	}
 
@@ -26,14 +32,20 @@ func binaryCount(value string) map[byte]int {
 
 type binaryList []*BinaryTree
 
-func rankByBinaryCount(runeFrequencies map[byte]int) binaryList {
+func rankByBinaryCount(runeFrequencies map[rune]int) binaryList {
 
 	list := make(binaryList, len(runeFrequencies))
 	i := 0
-	for k := range runeFrequencies {
-		v := k
+	keys := make([]string, 0)
+	for k, _ := range runeFrequencies {
+		keys = append(keys, string(k))
+	}
+	sort.Strings(keys)
+
+	for _, k := range keys {
+		r := []rune(k)[0]
 		list[i] = &BinaryTree{
-			Value: &v,
+			Value: &r,
 		}
 		i++
 	}
@@ -72,25 +84,32 @@ func (s *BinaryTree) isLeaf() bool {
 	return s.Value != nil
 }
 
-func (s *BinaryTree) Prefix() map[rune]BitVector {
-	prefix := map[rune]BitVector{}
+func (s *BinaryTree) Prefix() map[rune]*bitvector.BitVector {
+	prefix := map[rune]*bitvector.BitVector{}
 	left := s.Left
 	if left.isLeaf() {
-		prefix[rune(*left.Value)] = []bool{false}
+		vector := bitvector.NewBitVectorFromBool([]bool{false})
+		prefix[rune(*left.Value)] = vector
 	} else {
 		m := left.Prefix()
-		for k, v := range m {
-			prefix[k] = append([]bool{false}, v...)
+
+		for r, v := range m {
+			vector := bitvector.NewBitVectorFromVectorPadStart(v, 1)
+			vector.Set(0, false)
+			prefix[r] = vector
 		}
 	}
 
 	right := s.Right
 	if right.isLeaf() {
-		prefix[rune(*right.Value)] = []bool{true}
+		vector := bitvector.NewBitVectorFromBool([]bool{true})
+		prefix[rune(*right.Value)] = vector
 	} else {
 		m := right.Prefix()
-		for k, v := range m {
-			prefix[k] = append([]bool{true}, v...)
+		for r, v := range m {
+			vector := bitvector.NewBitVectorFromVectorPadStart(v, 1)
+			vector.Set(0, true)
+			prefix[r] = vector
 		}
 	}
 

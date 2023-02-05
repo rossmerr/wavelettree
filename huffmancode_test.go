@@ -3,6 +3,8 @@ package wavelettree
 import (
 	"reflect"
 	"testing"
+
+	"github.com/rossmerr/bitvector"
 )
 
 func TestNewHuffmanCode(t *testing.T) {
@@ -17,7 +19,10 @@ func TestNewHuffmanCode(t *testing.T) {
 			want: &HuffmanCode{
 				Frequency: 15,
 				Left: &HuffmanCode{
-					Value:     &[]byte("C")[0],
+					Value: func() *rune {
+						r := rune('C')
+						return &r
+					}(),
 					Frequency: 6,
 				},
 				Right: &HuffmanCode{
@@ -26,16 +31,25 @@ func TestNewHuffmanCode(t *testing.T) {
 						Frequency: 4,
 						Left: &HuffmanCode{
 							Frequency: 1,
-							Value:     &[]byte("B")[0],
+							Value: func() *rune {
+								r := rune('B')
+								return &r
+							}(),
 						},
 						Right: &HuffmanCode{
 							Frequency: 3,
-							Value:     &[]byte("D")[0],
+							Value: func() *rune {
+								r := rune('D')
+								return &r
+							}(),
 						},
 					},
 					Right: &HuffmanCode{
 						Frequency: 5,
-						Value:     &[]byte("A")[0],
+						Value: func() *rune {
+							r := rune('A')
+							return &r
+						}(),
 					},
 				},
 			},
@@ -46,6 +60,33 @@ func TestNewHuffmanCode(t *testing.T) {
 			if got := NewHuffmanCode(tt.value); !reflect.DeepEqual(got, tt.want) {
 
 				t.Errorf("NewHuffmanCode() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestHuffmanCode_Prefix(t *testing.T) {
+
+	tests := []struct {
+		name  string
+		value string
+		want  map[rune]*bitvector.BitVector
+	}{
+		{
+			name:  "HuffmanCode Prefix",
+			value: "mississippi",
+			want: map[rune]*bitvector.BitVector{
+				'i': bitvector.NewBitVectorFromBool([]bool{true, true}),
+				'm': bitvector.NewBitVectorFromBool([]bool{true, false, false}),
+				'p': bitvector.NewBitVectorFromBool([]bool{true, false, true}),
+				's': bitvector.NewBitVectorFromBool([]bool{false}),
+			},
+		}}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			s := NewHuffmanCode(tt.value)
+			if got := s.Prefix(); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("BinaryTree.Prefix() = %v, want %v", got, tt.want)
 			}
 		})
 	}

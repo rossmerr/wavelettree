@@ -2,6 +2,8 @@ package wavelettree
 
 import (
 	"testing"
+
+	"github.com/rossmerr/bitvector"
 )
 
 func TestWaveletTree_Access(t *testing.T) {
@@ -19,19 +21,19 @@ func TestWaveletTree_Access(t *testing.T) {
 		},
 		{
 			name: "binarytree mississippi",
-			i:    8,
+			i:    5,
 			want: rune('p'),
 			wt:   NewWaveletTree("mississippi"),
 		},
 		{
 			name: "huffman mississippi",
-			i:    4,
+			i:    1,
 			want: rune('i'),
 			wt:   NewHuffmanCodeWaveletTree("mississippi"),
 		},
 		{
 			name: "huffman mississippi",
-			i:    8,
+			i:    7,
 			want: rune('p'),
 			wt:   NewHuffmanCodeWaveletTree("mississippi"),
 		},
@@ -40,7 +42,7 @@ func TestWaveletTree_Access(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 
 			if got := tt.wt.Access(tt.i); got != tt.want {
-				t.Errorf("WaveletTree.Access() = %v, want %v", got, tt.want)
+				t.Errorf("WaveletTree.Access(%v) = %v, want %v", tt.i, string(got), string(tt.want))
 			}
 		})
 	}
@@ -68,7 +70,7 @@ func TestWaveletTree_Rank(t *testing.T) {
 				c:      'i',
 				offset: 6,
 			},
-			want: 2,
+			want: 3,
 		},
 		{
 			name: "huffman mississippi",
@@ -80,16 +82,22 @@ func TestWaveletTree_Rank(t *testing.T) {
 				c:      'i',
 				offset: 6,
 			},
-			want: 2,
+			want: 1,
 		},
 		{
 			name: "00110110110",
 			wt: func() *WaveletTree {
 				root := &Node{
-					vector: []bool{false, false, true, true, false, true, true, false, true, true, false},
+					vector: func() *bitvector.BitVector {
+						vector := bitvector.NewBitVectorFromBool([]bool{false, false, true, true, false, true, true, false, true, true, false})
+						return vector
+					}(),
 				}
 				level1 := &Node{
-					vector: []bool{true, false, false, false, false},
+					vector: func() *bitvector.BitVector {
+						vector := bitvector.NewBitVectorFromBool([]bool{true, false, false, false, false})
+						return vector
+					}(),
 					parent: root,
 				}
 				// i := byte('i')
@@ -99,11 +107,10 @@ func TestWaveletTree_Rank(t *testing.T) {
 				}
 				level1.left = level2
 				root.left = level1
+				vector := bitvector.NewBitVectorFromBool([]bool{false, false})
 				wt := &WaveletTree{
-					root: root,
-					prefix: map[rune]BitVector{
-						'i': {false, false},
-					},
+					root:   root,
+					prefix: map[rune]*bitvector.BitVector{'i': vector},
 				}
 				return wt
 			}(),
@@ -111,7 +118,7 @@ func TestWaveletTree_Rank(t *testing.T) {
 				c:      'i',
 				offset: 6,
 			},
-			want: 2,
+			want: 3,
 		},
 	}
 	for _, tt := range tests {
@@ -160,10 +167,16 @@ func TestWaveletTree_Select(t *testing.T) {
 			name: "00110110110",
 			wt: func() *WaveletTree {
 				root := &Node{
-					vector: []bool{false, false, true, true, false, true, true, false, true, true, false},
+					vector: func() *bitvector.BitVector {
+						vector := bitvector.NewBitVectorFromBool([]bool{false, false, true, true, false, true, true, false, true, true, false})
+						return vector
+					}(),
 				}
 				level1 := &Node{
-					vector: []bool{true, true, true, true, false, false},
+					vector: func() *bitvector.BitVector {
+						vector := bitvector.NewBitVectorFromBool([]bool{true, true, true, true, false, false})
+						return vector
+					}(),
 					parent: root,
 				}
 				// s := byte('s')
@@ -173,10 +186,11 @@ func TestWaveletTree_Select(t *testing.T) {
 				}
 				level1.right = level2
 				root.right = level1
+				vector := bitvector.NewBitVectorFromBool([]bool{true, true})
 				wt := &WaveletTree{
 					root: root,
-					prefix: map[rune]BitVector{
-						's': {true, true},
+					prefix: map[rune]*bitvector.BitVector{
+						's': vector,
 					},
 				}
 				return wt
