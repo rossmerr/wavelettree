@@ -100,9 +100,7 @@ func TestWaveletTree_Rank(t *testing.T) {
 					}(),
 					parent: root,
 				}
-				// i := byte('i')
 				level2 := &Node{
-					// value:  &i,
 					parent: level1,
 				}
 				level1.left = level2
@@ -179,9 +177,7 @@ func TestWaveletTree_Select(t *testing.T) {
 					}(),
 					parent: root,
 				}
-				// s := byte('s')
 				level2 := &Node{
-					// value:  &s,
 					parent: level1,
 				}
 				level1.right = level2
