@@ -18,10 +18,10 @@ func TestBinaryTree_Prefix(t *testing.T) {
 			name:  "Binary Prefix",
 			value: "mississippi",
 			want: map[rune]*bitvector.BitVector{
-				'i': bitvector.NewBitVectorFromBool([]bool{false, false}),
-				'm': bitvector.NewBitVectorFromBool([]bool{false, true}),
-				'p': bitvector.NewBitVectorFromBool([]bool{true, false}),
-				's': bitvector.NewBitVectorFromBool([]bool{true, true}),
+				'i': bitvector.NewBitVectorFromBool([]bool{false, true}),
+				'm': bitvector.NewBitVectorFromBool([]bool{false, false}),
+				'p': bitvector.NewBitVectorFromBool([]bool{true, true}),
+				's': bitvector.NewBitVectorFromBool([]bool{true, false}),
 			},
 		},
 	}

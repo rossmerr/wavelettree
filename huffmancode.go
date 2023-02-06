@@ -14,8 +14,8 @@ type HuffmanCode struct {
 }
 
 func NewHuffmanCode(value string) *HuffmanCode {
-	runeFrequencies := frequencyCount(value)
-	huffmanList := rankByRuneCount(runeFrequencies)
+	runeFrequencies, keys := frequencyCount(value)
+	huffmanList := rankByRuneCount(runeFrequencies, keys)
 	return buildHuffmanTree(huffmanList)
 }
 
@@ -28,7 +28,7 @@ func (s *HuffmanCode) Prefix() map[rune]*bitvector.BitVector {
 	left := s.Left
 	if left.isLeaf() {
 		vector := bitvector.NewBitVectorFromBool([]bool{false})
-		prefix[rune(*left.Value)] = vector
+		prefix[*left.Value] = vector
 	} else {
 		m := left.Prefix()
 		for k, v := range m {
@@ -42,7 +42,7 @@ func (s *HuffmanCode) Prefix() map[rune]*bitvector.BitVector {
 	if right.isLeaf() {
 		vector := bitvector.NewBitVectorFromBool([]bool{true})
 
-		prefix[rune(*right.Value)] = vector
+		prefix[*right.Value] = vector
 	} else {
 		m := right.Prefix()
 		for k, v := range m {
@@ -92,35 +92,30 @@ func buildHuffmanTree(list huffmanList) *HuffmanCode {
 	}
 }
 
-func frequencyCount(value string) map[rune]int {
+func frequencyCount(value string) (map[rune]int, []rune) {
 	runeFrequencies := make(map[rune]int)
+	keys := make([]rune, 0)
+
 	for i := range value {
 		r := rune(value[i])
 		if _, ok := runeFrequencies[r]; ok {
 			runeFrequencies[r] = runeFrequencies[r] + 1
 		} else {
 			runeFrequencies[r] = 1
+			keys = append(keys, r)
+
 		}
 	}
 
-	return runeFrequencies
+	return runeFrequencies, keys
 }
 
-func rankByRuneCount(runeFrequencies map[rune]int) huffmanList {
+func rankByRuneCount(runeFrequencies map[rune]int, keys []rune) huffmanList {
 	list := make(huffmanList, len(runeFrequencies))
-	i := 0
 
-	keys := make([]string, 0)
-	for k, _ := range runeFrequencies {
-		keys = append(keys, string(k))
-	}
-	sort.Strings(keys)
-
-	for _, k := range keys {
-		r := []rune(k)[0]
-
-		list[i] = &HuffmanCode{Value: &r, Frequency: runeFrequencies[r]}
-		i++
+	for i, r := range keys {
+		v := r
+		list[i] = &HuffmanCode{Value: &v, Frequency: runeFrequencies[r]}
 	}
 	sort.Sort(list)
 	return list

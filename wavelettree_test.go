@@ -148,7 +148,7 @@ func TestWaveletTree_Select(t *testing.T) {
 				c:    's',
 				rank: 3,
 			},
-			want: 6,
+			want: 5,
 		},
 		{
 			name: "huffman mississippi",

@@ -1,8 +1,6 @@
 package wavelettree
 
 import (
-	"sort"
-
 	"github.com/rossmerr/bitvector"
 )
 
@@ -13,41 +11,35 @@ type BinaryTree struct {
 }
 
 func NewBinaryTree(value string) *BinaryTree {
-	runeFrequencies := binaryCount(value)
-	binaryList := rankByBinaryCount(runeFrequencies)
+	runeFrequencies, keys := binaryCount(value)
+	binaryList := rankByBinaryCount(runeFrequencies, keys)
 	return buildBinaryTree(value, binaryList)
 }
 
-func binaryCount(value string) map[rune]int {
+func binaryCount(value string) (map[rune]int, []rune) {
 	runeFrequencies := make(map[rune]int)
+	keys := make([]rune, 0)
 
-	for _, entry := range value {
-		if _, ok := runeFrequencies[entry]; !ok {
-			runeFrequencies[entry] = len(runeFrequencies)
+	for _, r := range value {
+		if _, ok := runeFrequencies[r]; !ok {
+			runeFrequencies[r] = len(runeFrequencies)
+			keys = append(keys, r)
 		}
 	}
 
-	return runeFrequencies
+	return runeFrequencies, keys
 }
 
 type binaryList []*BinaryTree
 
-func rankByBinaryCount(runeFrequencies map[rune]int) binaryList {
-
+func rankByBinaryCount(runeFrequencies map[rune]int, keys []rune) binaryList {
 	list := make(binaryList, len(runeFrequencies))
-	i := 0
-	keys := make([]string, 0)
-	for k, _ := range runeFrequencies {
-		keys = append(keys, string(k))
-	}
-	sort.Strings(keys)
 
-	for _, k := range keys {
-		r := []rune(k)[0]
+	for i, r := range keys {
+		v := r
 		list[i] = &BinaryTree{
-			Value: &r,
+			Value: &v,
 		}
-		i++
 	}
 
 	return list
