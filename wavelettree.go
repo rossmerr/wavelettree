@@ -1,6 +1,10 @@
 package wavelettree
 
-import "github.com/rossmerr/bitvector"
+import (
+	"fmt"
+
+	"github.com/rossmerr/bitvector"
+)
 
 type WaveletTree struct {
 	root   *Node
@@ -54,4 +58,15 @@ func (wt *WaveletTree) Select(c rune, rank int) int {
 	start := wt.root.Walk(prefix)
 
 	return start.Select(prefix, rank)
+}
+
+func (wt WaveletTree) String() string {
+	str := ""
+	str += fmt.Sprintf(" length: %v", wt.n)
+
+	if wt.root != nil {
+		str += fmt.Sprintf(", root: %s", wt.root)
+	}
+
+	return fmt.Sprintf("{%s }", str)
 }

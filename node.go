@@ -1,6 +1,10 @@
 package wavelettree
 
-import "github.com/rossmerr/bitvector"
+import (
+	"fmt"
+
+	"github.com/rossmerr/bitvector"
+)
 
 type Node struct {
 	parent *Node
@@ -157,4 +161,20 @@ func (t *Node) Select(prefix *bitvector.BitVector, rank int) int {
 	}
 	return r
 
+}
+
+func (t Node) String() string {
+	str := ""
+	if t.left != nil {
+		str += fmt.Sprintf(" left: %s", t.left)
+	}
+	if t.right != nil {
+		str += fmt.Sprintf(" right: %s", t.right)
+	}
+
+	if t.value != nil {
+		str += fmt.Sprintf(" value: %s", string(*t.value))
+	}
+
+	return fmt.Sprintf("{%s }", str)
 }
