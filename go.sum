@@ -2,3 +2,7 @@ github.com/rossmerr/bitvector v0.0.0-20230205220623-ab49b8a13311 h1:rHKJW1VxjZ0+
 github.com/rossmerr/bitvector v0.0.0-20230205220623-ab49b8a13311/go.mod h1:SspG0ls/bZbhrZZh2jmLXxtfk9Chif7C+acDx1qT1KM=
 github.com/rossmerr/bitvector v0.0.0-20230205222047-afb18aa84038 h1:JEwyumvW/DQP5z7owceqUmRROKNX6xJa/GSdFLXGYPM=
 github.com/rossmerr/bitvector v0.0.0-20230205222047-afb18aa84038/go.mod h1:SspG0ls/bZbhrZZh2jmLXxtfk9Chif7C+acDx1qT1KM=
+github.com/rossmerr/bitvector v0.0.0-20230209232028-2a39f32d7dc2 h1:COHIQdrdQP+1cjuXQR+JCDq4QyADR/FgjO3Ko3G7IyI=
+github.com/rossmerr/bitvector v0.0.0-20230209232028-2a39f32d7dc2/go.mod h1:SspG0ls/bZbhrZZh2jmLXxtfk9Chif7C+acDx1qT1KM=
+github.com/rossmerr/bitvector v0.0.0-20230209232352-fe5ad6a50a13 h1:YMOaOb1xTdKI63pTvlYvU+4WJ0suFmHjoA8uY9V6ELs=
+github.com/rossmerr/bitvector v0.0.0-20230209232352-fe5ad6a50a13/go.mod h1:SspG0ls/bZbhrZZh2jmLXxtfk9Chif7C+acDx1qT1KM=

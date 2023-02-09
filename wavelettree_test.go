@@ -21,26 +21,27 @@ func TestWaveletTree_Access(t *testing.T) {
 		},
 		{
 			name: "binarytree mississippi",
-			i:    5,
+			i:    8,
 			want: rune('p'),
 			wt:   NewWaveletTree("mississippi"),
 		},
 		{
 			name: "huffman mississippi",
-			i:    1,
+			i:    4,
 			want: rune('i'),
 			wt:   NewHuffmanCodeWaveletTree("mississippi"),
 		},
 		{
 			name: "huffman mississippi",
-			i:    7,
+			i:    8,
 			want: rune('p'),
 			wt:   NewHuffmanCodeWaveletTree("mississippi"),
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := tt.wt.Access(tt.i); got != tt.want {
+			got := tt.wt.Access(tt.i)
+			if got != tt.want {
 				t.Errorf("WaveletTree.Access(%v) = %v, want %v", tt.i, string(got), string(tt.want))
 			}
 		})
@@ -69,7 +70,7 @@ func TestWaveletTree_Rank(t *testing.T) {
 				c:      'i',
 				offset: 6,
 			},
-			want: 3,
+			want: 2,
 		},
 		{
 			name: "huffman mississippi",
@@ -81,7 +82,7 @@ func TestWaveletTree_Rank(t *testing.T) {
 				c:      'i',
 				offset: 6,
 			},
-			want: 1,
+			want: 2,
 		},
 		{
 			name: "00110110110",
@@ -115,7 +116,7 @@ func TestWaveletTree_Rank(t *testing.T) {
 				c:      'i',
 				offset: 6,
 			},
-			want: 3,
+			want: 2,
 		},
 	}
 	for _, tt := range tests {
