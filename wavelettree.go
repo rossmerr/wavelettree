@@ -60,6 +60,10 @@ func (wt *WaveletTree) Select(c rune, rank int) int {
 	return start.Select(prefix, rank)
 }
 
+func (wt *WaveletTree) Length() int {
+	return wt.n
+}
+
 func (wt WaveletTree) String() string {
 	str := ""
 	str += fmt.Sprintf(" length: %v", wt.n)
