@@ -68,5 +68,9 @@ func (wt WaveletTree) String() string {
 		str += fmt.Sprintf(", root: %s", wt.root)
 	}
 
+	if wt.prefix != nil {
+		str += fmt.Sprintf(", prefix: %+v", wt.prefix)
+	}
+
 	return fmt.Sprintf("{%s }", str)
 }
