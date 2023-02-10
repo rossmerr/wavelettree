@@ -15,7 +15,44 @@ func TestWaveletTree_Access(t *testing.T) {
 	}{
 		{
 			name: "binarytree mississippi",
+			i:    0,
+			want: rune('m'),
+			wt:   NewWaveletTree("mississippi"),
+		},
+		{
+			name: "binarytree mississippi",
+			i:    1,
+			want: rune('i'),
+			wt:   NewWaveletTree("mississippi"),
+		}, {
+			name: "binarytree mississippi",
+			i:    2,
+			want: rune('s'),
+			wt:   NewWaveletTree("mississippi"),
+		}, {
+			name: "binarytree mississippi",
+			i:    3,
+			want: rune('s'),
+			wt:   NewWaveletTree("mississippi"),
+		}, {
+			name: "binarytree mississippi",
 			i:    4,
+			want: rune('i'),
+			wt:   NewWaveletTree("mississippi"),
+		}, {
+			name: "binarytree mississippi",
+			i:    5,
+			want: rune('s'),
+			wt:   NewWaveletTree("mississippi"),
+		}, {
+			name: "binarytree mississippi",
+			i:    6,
+			want: rune('s'),
+			wt:   NewWaveletTree("mississippi"),
+		},
+		{
+			name: "binarytree mississippi",
+			i:    7,
 			want: rune('i'),
 			wt:   NewWaveletTree("mississippi"),
 		},
@@ -26,6 +63,42 @@ func TestWaveletTree_Access(t *testing.T) {
 			wt:   NewWaveletTree("mississippi"),
 		},
 		{
+			name: "binarytree mississippi",
+			i:    9,
+			want: rune('p'),
+			wt:   NewWaveletTree("mississippi"),
+		},
+		{
+			name: "binarytree mississippi",
+			i:    10,
+			want: rune('i'),
+			wt:   NewWaveletTree("mississippi"),
+		},
+		{
+			name: "huffman mississippi",
+			i:    0,
+			want: rune('m'),
+			wt:   NewHuffmanCodeWaveletTree("mississippi"),
+		},
+		{
+			name: "huffman mississippi",
+			i:    1,
+			want: rune('i'),
+			wt:   NewHuffmanCodeWaveletTree("mississippi"),
+		},
+		{
+			name: "huffman mississippi",
+			i:    2,
+			want: rune('s'),
+			wt:   NewHuffmanCodeWaveletTree("mississippi"),
+		},
+		{
+			name: "huffman mississippi",
+			i:    3,
+			want: rune('s'),
+			wt:   NewHuffmanCodeWaveletTree("mississippi"),
+		},
+		{
 			name: "huffman mississippi",
 			i:    4,
 			want: rune('i'),
@@ -33,8 +106,39 @@ func TestWaveletTree_Access(t *testing.T) {
 		},
 		{
 			name: "huffman mississippi",
+			i:    5,
+			want: rune('s'),
+			wt:   NewHuffmanCodeWaveletTree("mississippi"),
+		},
+		{
+			name: "huffman mississippi",
+			i:    6,
+			want: rune('s'),
+			wt:   NewHuffmanCodeWaveletTree("mississippi"),
+		},
+		{
+			name: "huffman mississippi",
+			i:    7,
+			want: rune('i'),
+			wt:   NewHuffmanCodeWaveletTree("mississippi"),
+		},
+
+		{
+			name: "huffman mississippi",
 			i:    8,
 			want: rune('p'),
+			wt:   NewHuffmanCodeWaveletTree("mississippi"),
+		},
+		{
+			name: "huffman mississippi",
+			i:    9,
+			want: rune('p'),
+			wt:   NewHuffmanCodeWaveletTree("mississippi"),
+		},
+		{
+			name: "huffman mississippi",
+			i:    10,
+			want: rune('i'),
 			wt:   NewHuffmanCodeWaveletTree("mississippi"),
 		},
 	}
