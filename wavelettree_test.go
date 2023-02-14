@@ -24,7 +24,8 @@ func TestWaveletTree_Access(t *testing.T) {
 			i:    1,
 			want: rune('i'),
 			wt:   NewWaveletTree("mississippi"),
-		}, {
+		},
+		{
 			name: "binarytree mississippi",
 			i:    2,
 			want: rune('s'),
@@ -166,10 +167,25 @@ func TestWaveletTree_Rank(t *testing.T) {
 	}{
 		{
 			name: "binarytree mississippi",
-			wt: func() *WaveletTree {
-				return NewWaveletTree("mississippi")
-
-			}(),
+			wt:   NewWaveletTree("mississippi"),
+			args: args{
+				c:      'm',
+				offset: 0,
+			},
+			want: 0,
+		},
+		{
+			name: "binarytree mississippi",
+			wt:   NewWaveletTree("mississippi"),
+			args: args{
+				c:      'm',
+				offset: 1,
+			},
+			want: 1,
+		},
+		{
+			name: "binarytree mississippi",
+			wt:   NewWaveletTree("mississippi"),
 			args: args{
 				c:      'i',
 				offset: 6,

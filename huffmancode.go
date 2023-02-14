@@ -41,7 +41,6 @@ func (s *HuffmanCode) Prefix() map[rune]*bitvector.BitVector {
 	right := s.Right
 	if right.isLeaf() {
 		vector := bitvector.NewBitVectorFromBool([]bool{true})
-
 		prefix[*right.Value] = vector
 	} else {
 		m := right.Prefix()

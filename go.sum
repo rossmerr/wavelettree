@@ -6,3 +6,13 @@ github.com/rossmerr/bitvector v0.0.0-20230209232028-2a39f32d7dc2 h1:COHIQdrdQP+1
 github.com/rossmerr/bitvector v0.0.0-20230209232028-2a39f32d7dc2/go.mod h1:SspG0ls/bZbhrZZh2jmLXxtfk9Chif7C+acDx1qT1KM=
 github.com/rossmerr/bitvector v0.0.0-20230209232352-fe5ad6a50a13 h1:YMOaOb1xTdKI63pTvlYvU+4WJ0suFmHjoA8uY9V6ELs=
 github.com/rossmerr/bitvector v0.0.0-20230209232352-fe5ad6a50a13/go.mod h1:SspG0ls/bZbhrZZh2jmLXxtfk9Chif7C+acDx1qT1KM=
+github.com/rossmerr/bitvector v0.0.0-20230211194806-988b8d8ca7a0 h1:Yxk7HAQvxqKgN09MEnitm18ng6sUc1+P1Y+2Ybpme24=
+github.com/rossmerr/bitvector v0.0.0-20230211194806-988b8d8ca7a0/go.mod h1:SspG0ls/bZbhrZZh2jmLXxtfk9Chif7C+acDx1qT1KM=
+github.com/rossmerr/bitvector v0.0.0-20230212163453-9d690039648c h1:eVFItC2BgzgijtiTBVi+JONTjjqzn3gnWdaaf/qe6BQ=
+github.com/rossmerr/bitvector v0.0.0-20230212163453-9d690039648c/go.mod h1:SspG0ls/bZbhrZZh2jmLXxtfk9Chif7C+acDx1qT1KM=
+github.com/rossmerr/bitvector v0.0.0-20230214192455-025ec2e92c92 h1:k7bUt6Hd/L3cJXc1llDr5fdPdd+bnut+GVxt6WkW4ws=
+github.com/rossmerr/bitvector v0.0.0-20230214192455-025ec2e92c92/go.mod h1:SspG0ls/bZbhrZZh2jmLXxtfk9Chif7C+acDx1qT1KM=
+github.com/rossmerr/bitvector v0.0.0-20230214193313-ef9b32e6084f h1:Vk9Db55Vpa3ZKTSqpUmVB9evhH2KiWe3QwAbOUXvn5Q=
+github.com/rossmerr/bitvector v0.0.0-20230214193313-ef9b32e6084f/go.mod h1:SspG0ls/bZbhrZZh2jmLXxtfk9Chif7C+acDx1qT1KM=
+github.com/rossmerr/bitvector v0.0.0-20230214194829-0930f1213f6c h1:oev4YhkenpOPRMfJ8EbfD/R/Ir8tWKkN+Glisr0SaWM=
+github.com/rossmerr/bitvector v0.0.0-20230214194829-0930f1213f6c/go.mod h1:SspG0ls/bZbhrZZh2jmLXxtfk9Chif7C+acDx1qT1KM=

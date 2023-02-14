@@ -107,16 +107,17 @@ func (t *Node) Access(i int) rune {
 }
 
 func (t *Node) Rank(prefix *bitvector.BitVector, offset int) int {
-	if t.isLeaf() {
-		return offset
-	}
 
 	c := prefix.Get(0)
 
 	rank := t.vector.Rank(c, offset)
 
-	vector := bitvector.NewBitVector(prefix.Length())
-	prefix.Copy(vector, 1, prefix.Length())
+	vector := bitvector.NewBitVector(prefix.Length() - 1)
+	if prefix.Length() > 1 {
+		prefix.Copy(vector, 1, prefix.Length())
+	} else {
+		return rank
+	}
 
 	if c {
 		return t.right.Rank(vector, rank)
