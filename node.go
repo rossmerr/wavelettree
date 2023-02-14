@@ -134,8 +134,10 @@ func (t *Node) Walk(prefix *bitvector.BitVector) *Node {
 
 	c := prefix.Get(0)
 
-	vector := bitvector.NewBitVector(prefix.Length())
-	prefix.Copy(vector, 1, prefix.Length())
+	vector := bitvector.NewBitVector(prefix.Length() - 1)
+	if prefix.Length() > 1 {
+		prefix.Copy(vector, 1, prefix.Length())
+	}
 
 	if c {
 		return t.right.Walk(vector)
@@ -155,7 +157,7 @@ func (t *Node) Select(prefix *bitvector.BitVector, rank int) int {
 
 	if t.parent != nil {
 
-		vector := bitvector.NewBitVector(prefix.Length())
+		vector := bitvector.NewBitVector(prefix.Length() - 1)
 		prefix.Copy(vector, 0, prefix.Length()-1)
 
 		return t.parent.Select(vector, r)

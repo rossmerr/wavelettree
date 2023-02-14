@@ -194,10 +194,7 @@ func TestWaveletTree_Rank(t *testing.T) {
 		},
 		{
 			name: "huffman mississippi",
-			wt: func() *WaveletTree {
-				return NewHuffmanCodeWaveletTree("mississippi")
-
-			}(),
+			wt:   NewHuffmanCodeWaveletTree("mississippi"),
 			args: args{
 				c:      'i',
 				offset: 6,
@@ -261,20 +258,16 @@ func TestWaveletTree_Select(t *testing.T) {
 	}{
 		{
 			name: "binarytree mississippi",
-			wt: func() *WaveletTree {
-				return NewWaveletTree("mississippi")
-			}(),
+			wt:   NewWaveletTree("mississippi"),
 			args: args{
 				c:    's',
 				rank: 3,
 			},
-			want: 5,
+			want: 6,
 		},
 		{
 			name: "huffman mississippi",
-			wt: func() *WaveletTree {
-				return NewHuffmanCodeWaveletTree("mississippi")
-			}(),
+			wt:   NewHuffmanCodeWaveletTree("mississippi"),
 			args: args{
 				c:    's',
 				rank: 3,
@@ -317,10 +310,10 @@ func TestWaveletTree_Select(t *testing.T) {
 			want: 6,
 		},
 	}
-	for _, tt := range tests {
+	for i, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := tt.wt.Select(tt.args.c, tt.args.rank); got != tt.want {
-				t.Errorf("WaveletTree.Select() = %v, want %v", got, tt.want)
+				t.Errorf("WaveletTree.Select(%v) = %v, want %v", i, got, tt.want)
 			}
 		})
 	}
