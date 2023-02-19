@@ -20,6 +20,12 @@ func NewHuffmanCodeTree(value string) Prefix {
 	return tree.prefix()
 }
 
+func NewHuffmanCodeTreeFromFrequencies(runeFrequencies map[rune]int, keys []rune) Prefix {
+	huffmanList := rankByRuneCount(runeFrequencies, keys)
+	tree := buildHuffmanTree(huffmanList)
+	return tree.prefix()
+}
+
 func (s *HuffmanCodeTree) isLeaf() bool {
 	return s.Value != nil
 }
