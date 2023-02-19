@@ -1,4 +1,4 @@
-package wavelettree
+package prefixtree
 
 import (
 	"github.com/rossmerr/bitvector"

@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/rossmerr/bitvector"
+	"github.com/rossmerr/wavelettree/prefixtree"
 )
 
 type Node struct {
@@ -14,11 +15,11 @@ type Node struct {
 	vector *bitvector.BitVector
 }
 
-func newBitVectorFromBytes(data []byte, prefix Prefix, depth int) (vector *bitvector.BitVector, left, right []byte, ok bool) {
+func newBitVectorFromBytes(data []byte, prefix prefixtree.Prefix, depth int) (vector *bitvector.BitVector, left, right []byte, ok bool) {
 	return newBitVectorFromString(string(data), prefix, depth)
 }
 
-func newBitVectorFromString(s string, prefix Prefix, depth int) (vector *bitvector.BitVector, left, right []byte, ok bool) {
+func newBitVectorFromString(s string, prefix prefixtree.Prefix, depth int) (vector *bitvector.BitVector, left, right []byte, ok bool) {
 	ok = true
 	vector = bitvector.NewBitVector(len(s))
 	for i, entry := range s {
@@ -41,7 +42,7 @@ func newBitVectorFromString(s string, prefix Prefix, depth int) (vector *bitvect
 	return
 }
 
-func newNode(data []byte, prefix Prefix, parent *Node, depth int) *Node {
+func newNode(data []byte, prefix prefixtree.Prefix, parent *Node, depth int) *Node {
 
 	vector, left, right, ok := newBitVectorFromBytes(data, prefix, depth)
 

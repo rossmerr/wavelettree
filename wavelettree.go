@@ -2,15 +2,17 @@ package wavelettree
 
 import (
 	"fmt"
+
+	"github.com/rossmerr/wavelettree/prefixtree"
 )
 
 type WaveletTree struct {
 	root   *Node
-	prefix Prefix
+	prefix prefixtree.Prefix
 	n      int // Length of the root bitvector
 }
 
-func NewWaveletTree(value string, prefix Prefix) *WaveletTree {
+func NewWaveletTree(value string, prefix prefixtree.Prefix) *WaveletTree {
 	root := newNode([]byte(value), prefix, nil, 0)
 	tree := &WaveletTree{
 		root:   root,
@@ -22,7 +24,7 @@ func NewWaveletTree(value string, prefix Prefix) *WaveletTree {
 }
 
 func NewBalancedWaveletTree(value string) *WaveletTree {
-	prefix := NewBinaryTree(value)
+	prefix := prefixtree.NewBinaryTree(value)
 	root := newNode([]byte(value), prefix, nil, 0)
 	tree := &WaveletTree{
 		root:   root,
@@ -34,7 +36,7 @@ func NewBalancedWaveletTree(value string) *WaveletTree {
 }
 
 func NewHuffmanCodeWaveletTree(value string) *WaveletTree {
-	prefix := NewHuffmanCodeTree(value)
+	prefix := prefixtree.NewHuffmanCodeTree(value)
 
 	root := newNode([]byte(value), prefix, nil, 0)
 
