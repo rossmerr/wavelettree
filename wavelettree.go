@@ -2,23 +2,27 @@ package wavelettree
 
 import (
 	"fmt"
-
-	"github.com/rossmerr/bitvector"
 )
 
 type WaveletTree struct {
 	root   *Node
-	prefix map[rune]*bitvector.BitVector
+	prefix Prefix
 	n      int // Length of the root bitvector
 }
 
-func NewWaveletTree(value string) *WaveletTree {
-	return NewBalancedWaveletTree(value)
+func NewWaveletTree(value string, prefix Prefix) *WaveletTree {
+	root := newNode([]byte(value), prefix, nil, 0)
+	tree := &WaveletTree{
+		root:   root,
+		prefix: prefix,
+		n:      root.Length(),
+	}
+
+	return tree
 }
 
 func NewBalancedWaveletTree(value string) *WaveletTree {
-	br := NewBinaryTree(value)
-	prefix := br.Prefix()
+	prefix := NewBinaryTree(value)
 	root := newNode([]byte(value), prefix, nil, 0)
 	tree := &WaveletTree{
 		root:   root,
@@ -30,8 +34,7 @@ func NewBalancedWaveletTree(value string) *WaveletTree {
 }
 
 func NewHuffmanCodeWaveletTree(value string) *WaveletTree {
-	hc := NewHuffmanCode(value)
-	prefix := hc.Prefix()
+	prefix := NewHuffmanCodeTree(value)
 
 	root := newNode([]byte(value), prefix, nil, 0)
 

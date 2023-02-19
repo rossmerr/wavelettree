@@ -17,63 +17,63 @@ func TestWaveletTree_Access(t *testing.T) {
 			name: "binarytree mississippi",
 			i:    0,
 			want: rune('m'),
-			wt:   NewWaveletTree("mississippi"),
+			wt:   NewBalancedWaveletTree("mississippi"),
 		},
 		{
 			name: "binarytree mississippi",
 			i:    1,
 			want: rune('i'),
-			wt:   NewWaveletTree("mississippi"),
+			wt:   NewBalancedWaveletTree("mississippi"),
 		},
 		{
 			name: "binarytree mississippi",
 			i:    2,
 			want: rune('s'),
-			wt:   NewWaveletTree("mississippi"),
+			wt:   NewBalancedWaveletTree("mississippi"),
 		}, {
 			name: "binarytree mississippi",
 			i:    3,
 			want: rune('s'),
-			wt:   NewWaveletTree("mississippi"),
+			wt:   NewBalancedWaveletTree("mississippi"),
 		}, {
 			name: "binarytree mississippi",
 			i:    4,
 			want: rune('i'),
-			wt:   NewWaveletTree("mississippi"),
+			wt:   NewBalancedWaveletTree("mississippi"),
 		}, {
 			name: "binarytree mississippi",
 			i:    5,
 			want: rune('s'),
-			wt:   NewWaveletTree("mississippi"),
+			wt:   NewBalancedWaveletTree("mississippi"),
 		}, {
 			name: "binarytree mississippi",
 			i:    6,
 			want: rune('s'),
-			wt:   NewWaveletTree("mississippi"),
+			wt:   NewBalancedWaveletTree("mississippi"),
 		},
 		{
 			name: "binarytree mississippi",
 			i:    7,
 			want: rune('i'),
-			wt:   NewWaveletTree("mississippi"),
+			wt:   NewBalancedWaveletTree("mississippi"),
 		},
 		{
 			name: "binarytree mississippi",
 			i:    8,
 			want: rune('p'),
-			wt:   NewWaveletTree("mississippi"),
+			wt:   NewBalancedWaveletTree("mississippi"),
 		},
 		{
 			name: "binarytree mississippi",
 			i:    9,
 			want: rune('p'),
-			wt:   NewWaveletTree("mississippi"),
+			wt:   NewBalancedWaveletTree("mississippi"),
 		},
 		{
 			name: "binarytree mississippi",
 			i:    10,
 			want: rune('i'),
-			wt:   NewWaveletTree("mississippi"),
+			wt:   NewBalancedWaveletTree("mississippi"),
 		},
 		{
 			name: "huffman mississippi",
@@ -167,7 +167,7 @@ func TestWaveletTree_Rank(t *testing.T) {
 	}{
 		{
 			name: "binarytree mississippi",
-			wt:   NewWaveletTree("mississippi"),
+			wt:   NewBalancedWaveletTree("mississippi"),
 			args: args{
 				c:      'm',
 				offset: 0,
@@ -176,7 +176,7 @@ func TestWaveletTree_Rank(t *testing.T) {
 		},
 		{
 			name: "binarytree mississippi",
-			wt:   NewWaveletTree("mississippi"),
+			wt:   NewBalancedWaveletTree("mississippi"),
 			args: args{
 				c:      'm',
 				offset: 1,
@@ -185,7 +185,7 @@ func TestWaveletTree_Rank(t *testing.T) {
 		},
 		{
 			name: "binarytree mississippi",
-			wt:   NewWaveletTree("mississippi"),
+			wt:   NewBalancedWaveletTree("mississippi"),
 			args: args{
 				c:      'i',
 				offset: 6,
@@ -258,7 +258,7 @@ func TestWaveletTree_Select(t *testing.T) {
 	}{
 		{
 			name: "binarytree mississippi",
-			wt:   NewWaveletTree("mississippi"),
+			wt:   NewBalancedWaveletTree("mississippi"),
 			args: args{
 				c:    's',
 				rank: 3,

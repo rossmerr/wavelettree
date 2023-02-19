@@ -10,10 +10,11 @@ type BinaryTree struct {
 	Value *rune
 }
 
-func NewBinaryTree(value string) *BinaryTree {
+func NewBinaryTree(value string) Prefix {
 	runeFrequencies, keys := binaryCount(value)
 	binaryList := rankByBinaryCount(runeFrequencies, keys)
-	return buildBinaryTree(value, binaryList)
+	tree := buildBinaryTree(value, binaryList)
+	return tree.prefix()
 }
 
 func binaryCount(value string) (map[rune]int, []rune) {
@@ -76,14 +77,14 @@ func (s *BinaryTree) isLeaf() bool {
 	return s.Value != nil
 }
 
-func (s *BinaryTree) Prefix() map[rune]*bitvector.BitVector {
-	prefix := map[rune]*bitvector.BitVector{}
+func (s *BinaryTree) prefix() Prefix {
+	prefix := Prefix{}
 	left := s.Left
 	if left.isLeaf() {
 		vector := bitvector.NewBitVectorFromBool([]bool{false})
 		prefix[rune(*left.Value)] = vector
 	} else {
-		m := left.Prefix()
+		m := left.prefix()
 
 		for r, v := range m {
 			vector := bitvector.NewBitVectorFromVectorPadStart(v, 1)
@@ -97,7 +98,7 @@ func (s *BinaryTree) Prefix() map[rune]*bitvector.BitVector {
 		vector := bitvector.NewBitVectorFromBool([]bool{true})
 		prefix[rune(*right.Value)] = vector
 	} else {
-		m := right.Prefix()
+		m := right.prefix()
 		for r, v := range m {
 			vector := bitvector.NewBitVectorFromVectorPadStart(v, 1)
 			vector.Set(0, true)

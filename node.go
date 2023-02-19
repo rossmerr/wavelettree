@@ -14,11 +14,11 @@ type Node struct {
 	vector *bitvector.BitVector
 }
 
-func newBitVectorFromBytes(data []byte, prefix map[rune]*bitvector.BitVector, depth int) (vector *bitvector.BitVector, left, right []byte, ok bool) {
+func newBitVectorFromBytes(data []byte, prefix Prefix, depth int) (vector *bitvector.BitVector, left, right []byte, ok bool) {
 	return newBitVectorFromString(string(data), prefix, depth)
 }
 
-func newBitVectorFromString(s string, prefix map[rune]*bitvector.BitVector, depth int) (vector *bitvector.BitVector, left, right []byte, ok bool) {
+func newBitVectorFromString(s string, prefix Prefix, depth int) (vector *bitvector.BitVector, left, right []byte, ok bool) {
 	ok = true
 	vector = bitvector.NewBitVector(len(s))
 	for i, entry := range s {
@@ -41,7 +41,7 @@ func newBitVectorFromString(s string, prefix map[rune]*bitvector.BitVector, dept
 	return
 }
 
-func newNode(data []byte, prefix map[rune]*bitvector.BitVector, parent *Node, depth int) *Node {
+func newNode(data []byte, prefix Prefix, parent *Node, depth int) *Node {
 
 	vector, left, right, ok := newBitVectorFromBytes(data, prefix, depth)
 

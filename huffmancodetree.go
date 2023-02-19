@@ -6,31 +6,32 @@ import (
 	"github.com/rossmerr/bitvector"
 )
 
-type HuffmanCode struct {
-	Left      *HuffmanCode
-	Right     *HuffmanCode
+type HuffmanCodeTree struct {
+	Left      *HuffmanCodeTree
+	Right     *HuffmanCodeTree
 	Value     *rune
 	Frequency int
 }
 
-func NewHuffmanCode(value string) *HuffmanCode {
+func NewHuffmanCodeTree(value string) Prefix {
 	runeFrequencies, keys := frequencyCount(value)
 	huffmanList := rankByRuneCount(runeFrequencies, keys)
-	return buildHuffmanTree(huffmanList)
+	tree := buildHuffmanTree(huffmanList)
+	return tree.prefix()
 }
 
-func (s *HuffmanCode) isLeaf() bool {
+func (s *HuffmanCodeTree) isLeaf() bool {
 	return s.Value != nil
 }
 
-func (s *HuffmanCode) Prefix() map[rune]*bitvector.BitVector {
-	prefix := map[rune]*bitvector.BitVector{}
+func (s *HuffmanCodeTree) prefix() Prefix {
+	prefix := Prefix{}
 	left := s.Left
 	if left.isLeaf() {
 		vector := bitvector.NewBitVectorFromBool([]bool{false})
 		prefix[*left.Value] = vector
 	} else {
-		m := left.Prefix()
+		m := left.prefix()
 		for k, v := range m {
 			vector := bitvector.NewBitVectorFromVectorPadStart(v, 1)
 			vector.Set(0, false)
@@ -43,7 +44,7 @@ func (s *HuffmanCode) Prefix() map[rune]*bitvector.BitVector {
 		vector := bitvector.NewBitVectorFromBool([]bool{true})
 		prefix[*right.Value] = vector
 	} else {
-		m := right.Prefix()
+		m := right.prefix()
 		for k, v := range m {
 			vector := bitvector.NewBitVectorFromVectorPadStart(v, 1)
 			vector.Set(0, true)
@@ -54,7 +55,7 @@ func (s *HuffmanCode) Prefix() map[rune]*bitvector.BitVector {
 	return prefix
 }
 
-func buildHuffmanTree(list huffmanList) *HuffmanCode {
+func buildHuffmanTree(list huffmanList) *HuffmanCodeTree {
 	for {
 		first := list[0]
 		list = list[1:]
@@ -68,7 +69,7 @@ func buildHuffmanTree(list huffmanList) *HuffmanCode {
 
 		sum := first.Frequency + second.Frequency
 
-		t := &HuffmanCode{
+		t := &HuffmanCodeTree{
 			Frequency: sum,
 			Left:      first,
 			Right:     second,
@@ -80,7 +81,7 @@ func buildHuffmanTree(list huffmanList) *HuffmanCode {
 
 		for _, pair := range list {
 			if pair.Frequency >= sum {
-				list = append([]*HuffmanCode{t}, list...)
+				list = append([]*HuffmanCodeTree{t}, list...)
 			} else {
 				list = append(list, t)
 
@@ -114,13 +115,13 @@ func rankByRuneCount(runeFrequencies map[rune]int, keys []rune) huffmanList {
 
 	for i, r := range keys {
 		v := r
-		list[i] = &HuffmanCode{Value: &v, Frequency: runeFrequencies[r]}
+		list[i] = &HuffmanCodeTree{Value: &v, Frequency: runeFrequencies[r]}
 	}
 	sort.Sort(list)
 	return list
 }
 
-type huffmanList []*HuffmanCode
+type huffmanList []*HuffmanCodeTree
 
 func (p huffmanList) Len() int           { return len(p) }
 func (p huffmanList) Less(i, j int) bool { return p[i].Frequency < p[j].Frequency }
