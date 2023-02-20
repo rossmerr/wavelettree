@@ -88,6 +88,7 @@ func English() Prefix {
 		'>': 83,
 		'?': 12357,
 		'@': 1,
+		ext: 0,
 	}
 
 	keys := RuneSlice{}
