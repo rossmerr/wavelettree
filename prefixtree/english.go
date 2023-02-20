@@ -3,8 +3,6 @@ package prefixtree
 import "sort"
 
 func English() Prefix {
-	prefix := Prefix{}
-
 	runeFrequencies := map[rune]int{
 		'A': 280937,
 		'B': 169474,
@@ -100,6 +98,5 @@ func English() Prefix {
 
 	sort.Sort(keys)
 
-	NewHuffmanCodeTreeFromFrequencies(runeFrequencies, keys)
-	return prefix
+	return NewHuffmanCodeTreeFromFrequencies(runeFrequencies, keys)
 }
