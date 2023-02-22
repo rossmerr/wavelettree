@@ -193,6 +193,24 @@ func TestWaveletTree_Rank(t *testing.T) {
 			want: 2,
 		},
 		{
+			name: "binarytree mississippi",
+			wt:   NewBalancedWaveletTree("mississippi"),
+			args: args{
+				c:      'i',
+				offset: 7,
+			},
+			want: 2,
+		},
+		{
+			name: "binarytree mississippi",
+			wt:   NewBalancedWaveletTree("mississippi"),
+			args: args{
+				c:      'i',
+				offset: 8,
+			},
+			want: 3,
+		},
+		{
 			name: "huffman mississippi",
 			wt:   NewHuffmanCodeWaveletTree("mississippi"),
 			args: args{
@@ -200,6 +218,33 @@ func TestWaveletTree_Rank(t *testing.T) {
 				offset: 6,
 			},
 			want: 2,
+		},
+		{
+			name: "huffman mississippi",
+			wt:   NewHuffmanCodeWaveletTree("mississippi"),
+			args: args{
+				c:      'i',
+				offset: 7,
+			},
+			want: 2,
+		},
+		{
+			name: "huffman mississippi",
+			wt:   NewHuffmanCodeWaveletTree("mississippi"),
+			args: args{
+				c:      'i',
+				offset: 8,
+			},
+			want: 3,
+		},
+		{
+			name: "huffman mississippi",
+			wt:   NewHuffmanCodeWaveletTree("mississippi"),
+			args: args{
+				c:      'i',
+				offset: 11,
+			},
+			want: 4,
 		},
 		{
 			name: "00110110110",
@@ -256,6 +301,15 @@ func TestWaveletTree_Select(t *testing.T) {
 		args args
 		want int
 	}{
+		{
+			name: "binarytree mississippi",
+			wt:   NewBalancedWaveletTree("mississippi"),
+			args: args{
+				c:    's',
+				rank: 1,
+			},
+			want: 3,
+		},
 		{
 			name: "binarytree mississippi",
 			wt:   NewBalancedWaveletTree("mississippi"),
