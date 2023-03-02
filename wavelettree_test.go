@@ -404,7 +404,24 @@ func TestWaveletTree_Select(t *testing.T) {
 		args args
 		want int
 	}{
-
+		{
+			name: "BWT encoded huffman quick fox",
+			wt:   NewHuffmanCodeWaveletTree([]rune("\x03        Tabcdeeefghhijklmnoooopqrrstuuvwxyz")),
+			args: args{
+				c:    'o',
+				rank: 0,
+			},
+			want: 27,
+		},
+		{
+			name: "BWT encoded huffman quick fox",
+			wt:   NewHuffmanCodeWaveletTree([]rune("\x03        Tabcdeeefghhijklmnoooopqrrstuuvwxyz")),
+			args: args{
+				c:    'o',
+				rank: 4,
+			},
+			want: 30,
+		},
 		{
 			name: "huffman quick fox",
 			wt:   NewHuffmanCodeWaveletTree([]rune("The quick brown fox jumps over the lazy dog")),
@@ -506,7 +523,8 @@ func TestWaveletTree_Select(t *testing.T) {
 	}
 	for i, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := tt.wt.Select(tt.args.c, tt.args.rank); got != tt.want {
+			got := tt.wt.Select(tt.args.c, tt.args.rank)
+			if got != tt.want {
 				t.Errorf("WaveletTree.Select(%v) = %v, want %v", i, got, tt.want)
 			}
 		})

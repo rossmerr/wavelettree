@@ -16,3 +16,5 @@ github.com/rossmerr/bitvector v0.0.0-20230214193313-ef9b32e6084f h1:Vk9Db55Vpa3Z
 github.com/rossmerr/bitvector v0.0.0-20230214193313-ef9b32e6084f/go.mod h1:SspG0ls/bZbhrZZh2jmLXxtfk9Chif7C+acDx1qT1KM=
 github.com/rossmerr/bitvector v0.0.0-20230214194829-0930f1213f6c h1:oev4YhkenpOPRMfJ8EbfD/R/Ir8tWKkN+Glisr0SaWM=
 github.com/rossmerr/bitvector v0.0.0-20230214194829-0930f1213f6c/go.mod h1:SspG0ls/bZbhrZZh2jmLXxtfk9Chif7C+acDx1qT1KM=
+github.com/rossmerr/bitvector v0.0.0-20230302170651-1a11a30098d3 h1:pmfZe4jr7pYwMqTP1x8tSrbvQ3J1rlODzrf6VOi1suQ=
+github.com/rossmerr/bitvector v0.0.0-20230302170651-1a11a30098d3/go.mod h1:SspG0ls/bZbhrZZh2jmLXxtfk9Chif7C+acDx1qT1KM=
