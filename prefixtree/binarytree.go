@@ -10,14 +10,14 @@ type BinaryTree struct {
 	Value *rune
 }
 
-func NewBinaryTree(value string) Prefix {
+func NewBinaryTree(value []rune) Prefix {
 	runeFrequencies, keys := binaryCount(value)
 	binaryList := rankByBinaryCount(runeFrequencies, keys)
-	tree := buildBinaryTree(value, binaryList)
+	tree := buildBinaryTree(binaryList)
 	return tree.prefix()
 }
 
-func binaryCount(value string) (map[rune]int, []rune) {
+func binaryCount(value []rune) (map[rune]int, []rune) {
 	runeFrequencies := make(map[rune]int)
 	keys := make([]rune, 0)
 
@@ -46,7 +46,7 @@ func rankByBinaryCount(runeFrequencies map[rune]int, keys []rune) binaryList {
 	return list
 }
 
-func buildBinaryTree(value string, list binaryList) *BinaryTree {
+func buildBinaryTree(list binaryList) *BinaryTree {
 
 	for {
 		first := list[0]

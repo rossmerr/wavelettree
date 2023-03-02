@@ -27,7 +27,7 @@ func TestBinaryTree_Prefix(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := NewBinaryTree(tt.value)
+			got := NewBinaryTree([]rune(tt.value))
 			if !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("BinaryTree.Prefix() = %v, want %v", got, tt.want)
 			}

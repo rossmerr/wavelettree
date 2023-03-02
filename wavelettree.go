@@ -12,8 +12,8 @@ type WaveletTree struct {
 	n      int // Length of the root bitvector
 }
 
-func NewWaveletTree(value string, prefix prefixtree.Prefix) *WaveletTree {
-	root := newNode([]byte(value), prefix, nil, 0)
+func NewWaveletTree(value []rune, prefix prefixtree.Prefix) *WaveletTree {
+	root := newNode(value, prefix, nil, 0)
 	tree := &WaveletTree{
 		root:   root,
 		prefix: prefix,
@@ -23,9 +23,9 @@ func NewWaveletTree(value string, prefix prefixtree.Prefix) *WaveletTree {
 	return tree
 }
 
-func NewBalancedWaveletTree(value string) *WaveletTree {
+func NewBalancedWaveletTree(value []rune) *WaveletTree {
 	prefix := prefixtree.NewBinaryTree(value)
-	root := newNode([]byte(value), prefix, nil, 0)
+	root := newNode(value, prefix, nil, 0)
 	tree := &WaveletTree{
 		root:   root,
 		prefix: prefix,
@@ -35,10 +35,10 @@ func NewBalancedWaveletTree(value string) *WaveletTree {
 	return tree
 }
 
-func NewHuffmanCodeWaveletTree(value string) *WaveletTree {
+func NewHuffmanCodeWaveletTree(value []rune) *WaveletTree {
 	prefix := prefixtree.NewHuffmanCodeTree(value)
 
-	root := newNode([]byte(value), prefix, nil, 0)
+	root := newNode(value, prefix, nil, 0)
 
 	tree := &WaveletTree{
 		root:   root,

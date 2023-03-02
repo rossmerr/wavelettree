@@ -13,7 +13,7 @@ type HuffmanCodeTree struct {
 	Frequency int
 }
 
-func NewHuffmanCodeTree(value string) Prefix {
+func NewHuffmanCodeTree(value []rune) Prefix {
 	runeFrequencies, keys := frequencyCount(value)
 	huffmanList := rankByRuneCount(runeFrequencies, keys)
 	tree := buildHuffmanTree(huffmanList)
@@ -98,12 +98,11 @@ func buildHuffmanTree(list huffmanList) *HuffmanCodeTree {
 	}
 }
 
-func frequencyCount(value string) (map[rune]int, []rune) {
+func frequencyCount(value []rune) (map[rune]int, []rune) {
 	runeFrequencies := make(map[rune]int)
 	keys := make([]rune, 0)
 
-	for i := range value {
-		r := rune(value[i])
+	for _, r := range value {
 		if _, ok := runeFrequencies[r]; ok {
 			runeFrequencies[r] = runeFrequencies[r] + 1
 		} else {

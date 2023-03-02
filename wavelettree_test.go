@@ -18,154 +18,154 @@ func TestWaveletTree_Access(t *testing.T) {
 			name: "binarytree mississippi",
 			i:    0,
 			want: rune('m'),
-			wt:   NewBalancedWaveletTree("mississippi"),
+			wt:   NewBalancedWaveletTree([]rune("mississippi")),
 		},
 		{
 			name: "binarytree mississippi",
 			i:    1,
 			want: rune('i'),
-			wt:   NewBalancedWaveletTree("mississippi"),
+			wt:   NewBalancedWaveletTree([]rune("mississippi")),
 		},
 		{
 			name: "binarytree mississippi",
 			i:    2,
 			want: rune('s'),
-			wt:   NewBalancedWaveletTree("mississippi"),
+			wt:   NewBalancedWaveletTree([]rune("mississippi")),
 		}, {
 			name: "binarytree mississippi",
 			i:    3,
 			want: rune('s'),
-			wt:   NewBalancedWaveletTree("mississippi"),
+			wt:   NewBalancedWaveletTree([]rune("mississippi")),
 		}, {
 			name: "binarytree mississippi",
 			i:    4,
 			want: rune('i'),
-			wt:   NewBalancedWaveletTree("mississippi"),
+			wt:   NewBalancedWaveletTree([]rune("mississippi")),
 		}, {
 			name: "binarytree mississippi",
 			i:    5,
 			want: rune('s'),
-			wt:   NewBalancedWaveletTree("mississippi"),
+			wt:   NewBalancedWaveletTree([]rune("mississippi")),
 		}, {
 			name: "binarytree mississippi",
 			i:    6,
 			want: rune('s'),
-			wt:   NewBalancedWaveletTree("mississippi"),
+			wt:   NewBalancedWaveletTree([]rune("mississippi")),
 		},
 		{
 			name: "binarytree mississippi",
 			i:    7,
 			want: rune('i'),
-			wt:   NewBalancedWaveletTree("mississippi"),
+			wt:   NewBalancedWaveletTree([]rune("mississippi")),
 		},
 		{
 			name: "binarytree mississippi",
 			i:    8,
 			want: rune('p'),
-			wt:   NewBalancedWaveletTree("mississippi"),
+			wt:   NewBalancedWaveletTree([]rune("mississippi")),
 		},
 		{
 			name: "binarytree mississippi",
 			i:    9,
 			want: rune('p'),
-			wt:   NewBalancedWaveletTree("mississippi"),
+			wt:   NewBalancedWaveletTree([]rune("mississippi")),
 		},
 		{
 			name: "binarytree mississippi",
 			i:    10,
 			want: rune('i'),
-			wt:   NewBalancedWaveletTree("mississippi"),
+			wt:   NewBalancedWaveletTree([]rune("mississippi")),
 		},
 		{
 			name: "huffman mississippi",
 			i:    0,
 			want: rune('m'),
-			wt:   NewHuffmanCodeWaveletTree("mississippi"),
+			wt:   NewHuffmanCodeWaveletTree([]rune("mississippi")),
 		},
 		{
 			name: "huffman mississippi",
 			i:    1,
 			want: rune('i'),
-			wt:   NewHuffmanCodeWaveletTree("mississippi"),
+			wt:   NewHuffmanCodeWaveletTree([]rune("mississippi")),
 		},
 		{
 			name: "huffman mississippi",
 			i:    2,
 			want: rune('s'),
-			wt:   NewHuffmanCodeWaveletTree("mississippi"),
+			wt:   NewHuffmanCodeWaveletTree([]rune("mississippi")),
 		},
 		{
 			name: "huffman mississippi",
 			i:    3,
 			want: rune('s'),
-			wt:   NewHuffmanCodeWaveletTree("mississippi"),
+			wt:   NewHuffmanCodeWaveletTree([]rune("mississippi")),
 		},
 		{
 			name: "huffman mississippi",
 			i:    4,
 			want: rune('i'),
-			wt:   NewHuffmanCodeWaveletTree("mississippi"),
+			wt:   NewHuffmanCodeWaveletTree([]rune("mississippi")),
 		},
 		{
 			name: "huffman mississippi",
 			i:    5,
 			want: rune('s'),
-			wt:   NewHuffmanCodeWaveletTree("mississippi"),
+			wt:   NewHuffmanCodeWaveletTree([]rune("mississippi")),
 		},
 		{
 			name: "huffman mississippi",
 			i:    6,
 			want: rune('s'),
-			wt:   NewHuffmanCodeWaveletTree("mississippi"),
+			wt:   NewHuffmanCodeWaveletTree([]rune("mississippi")),
 		},
 		{
 			name: "huffman mississippi",
 			i:    7,
 			want: rune('i'),
-			wt:   NewHuffmanCodeWaveletTree("mississippi"),
+			wt:   NewHuffmanCodeWaveletTree([]rune("mississippi")),
 		},
 
 		{
 			name: "huffman mississippi",
 			i:    8,
 			want: rune('p'),
-			wt:   NewHuffmanCodeWaveletTree("mississippi"),
+			wt:   NewHuffmanCodeWaveletTree([]rune("mississippi")),
 		},
 		{
 			name: "huffman mississippi",
 			i:    9,
 			want: rune('p'),
-			wt:   NewHuffmanCodeWaveletTree("mississippi"),
+			wt:   NewHuffmanCodeWaveletTree([]rune("mississippi")),
 		},
 		{
 			name: "huffman mississippi",
 			i:    10,
 			want: rune('i'),
-			wt:   NewHuffmanCodeWaveletTree("mississippi"),
+			wt:   NewHuffmanCodeWaveletTree([]rune("mississippi")),
 		},
 		{
 			name: "huffman quick fox",
 			i:    0,
 			want: rune('T'),
-			wt:   NewHuffmanCodeWaveletTree("The quick brown fox jumps over the lazy dog"),
+			wt:   NewHuffmanCodeWaveletTree([]rune("The quick brown fox jumps over the lazy dog")),
 		},
 		{
 			name: "huffman quick fox",
 			i:    0,
 			want: rune('T'),
-			wt:   NewHuffmanCodeWaveletTree("The quick brown fox jumps over the lazy dog"),
+			wt:   NewHuffmanCodeWaveletTree([]rune("The quick brown fox jumps over the lazy dog")),
 		},
 		{
 			name: "huffman quick fox",
 			i:    20,
 			want: rune('j'),
-			wt:   NewHuffmanCodeWaveletTree("The quick brown fox jumps over the lazy dog"),
+			wt:   NewHuffmanCodeWaveletTree([]rune("The quick brown fox jumps over the lazy dog")),
 		},
 		{
 			name: "huffman quick fox",
 			i:    42,
 			want: rune('g'),
-			wt:   NewHuffmanCodeWaveletTree("The quick brown fox jumps over the lazy dog"),
+			wt:   NewHuffmanCodeWaveletTree([]rune("The quick brown fox jumps over the lazy dog")),
 		},
 	}
 	for _, tt := range tests {
@@ -193,7 +193,7 @@ func TestWaveletTree_Rank(t *testing.T) {
 	}{
 		{
 			name: "binarytree mississippi",
-			wt:   NewBalancedWaveletTree("mississippi"),
+			wt:   NewBalancedWaveletTree([]rune("mississippi")),
 			args: args{
 				c:      'm',
 				offset: 0,
@@ -202,7 +202,7 @@ func TestWaveletTree_Rank(t *testing.T) {
 		},
 		{
 			name: "binarytree mississippi",
-			wt:   NewBalancedWaveletTree("mississippi"),
+			wt:   NewBalancedWaveletTree([]rune("mississippi")),
 			args: args{
 				c:      'm',
 				offset: 1,
@@ -211,7 +211,7 @@ func TestWaveletTree_Rank(t *testing.T) {
 		},
 		{
 			name: "binarytree mississippi",
-			wt:   NewBalancedWaveletTree("mississippi"),
+			wt:   NewBalancedWaveletTree([]rune("mississippi")),
 			args: args{
 				c:      'i',
 				offset: 6,
@@ -220,7 +220,7 @@ func TestWaveletTree_Rank(t *testing.T) {
 		},
 		{
 			name: "binarytree mississippi",
-			wt:   NewBalancedWaveletTree("mississippi"),
+			wt:   NewBalancedWaveletTree([]rune("mississippi")),
 			args: args{
 				c:      'i',
 				offset: 7,
@@ -229,7 +229,7 @@ func TestWaveletTree_Rank(t *testing.T) {
 		},
 		{
 			name: "binarytree mississippi",
-			wt:   NewBalancedWaveletTree("mississippi"),
+			wt:   NewBalancedWaveletTree([]rune("mississippi")),
 			args: args{
 				c:      'i',
 				offset: 8,
@@ -238,7 +238,7 @@ func TestWaveletTree_Rank(t *testing.T) {
 		},
 		{
 			name: "huffman mississippi",
-			wt:   NewHuffmanCodeWaveletTree("mississippi"),
+			wt:   NewHuffmanCodeWaveletTree([]rune("mississippi")),
 			args: args{
 				c:      'i',
 				offset: 6,
@@ -247,7 +247,7 @@ func TestWaveletTree_Rank(t *testing.T) {
 		},
 		{
 			name: "huffman mississippi",
-			wt:   NewHuffmanCodeWaveletTree("mississippi"),
+			wt:   NewHuffmanCodeWaveletTree([]rune("mississippi")),
 			args: args{
 				c:      'i',
 				offset: 7,
@@ -256,7 +256,7 @@ func TestWaveletTree_Rank(t *testing.T) {
 		},
 		{
 			name: "huffman mississippi",
-			wt:   NewHuffmanCodeWaveletTree("mississippi"),
+			wt:   NewHuffmanCodeWaveletTree([]rune("mississippi")),
 			args: args{
 				c:      'i',
 				offset: 8,
@@ -265,7 +265,7 @@ func TestWaveletTree_Rank(t *testing.T) {
 		},
 		{
 			name: "huffman mississippi",
-			wt:   NewHuffmanCodeWaveletTree("mississippi"),
+			wt:   NewHuffmanCodeWaveletTree([]rune("mississippi")),
 			args: args{
 				c:      'i',
 				offset: 11,
@@ -308,7 +308,7 @@ func TestWaveletTree_Rank(t *testing.T) {
 		},
 		{
 			name: "huffman quick fox",
-			wt:   NewHuffmanCodeWaveletTree("The quick brown fox jumps over the lazy dog"),
+			wt:   NewHuffmanCodeWaveletTree([]rune("The quick brown fox jumps over the lazy dog")),
 			args: args{
 				c:      'u',
 				offset: 42,
@@ -317,7 +317,7 @@ func TestWaveletTree_Rank(t *testing.T) {
 		},
 		{
 			name: "huffman quick fox",
-			wt:   NewHuffmanCodeWaveletTree("The quick brown fox jumps over the lazy dog"),
+			wt:   NewHuffmanCodeWaveletTree([]rune("The quick brown fox jumps over the lazy dog")),
 			args: args{
 				c:      ' ',
 				offset: 42,
@@ -326,7 +326,7 @@ func TestWaveletTree_Rank(t *testing.T) {
 		},
 		{
 			name: "huffman quick fox",
-			wt:   NewHuffmanCodeWaveletTree("The quick brown fox jumps over the lazy dog"),
+			wt:   NewHuffmanCodeWaveletTree([]rune("The quick brown fox jumps over the lazy dog")),
 			args: args{
 				c:      'u',
 				offset: 15,
@@ -335,7 +335,7 @@ func TestWaveletTree_Rank(t *testing.T) {
 		},
 		{
 			name: "huffman quick fox",
-			wt:   NewHuffmanCodeWaveletTree("The quick brown fox jumps over the lazy dog"),
+			wt:   NewHuffmanCodeWaveletTree([]rune("The quick brown fox jumps over the lazy dog")),
 			args: args{
 				c:      's',
 				offset: 42,
@@ -344,7 +344,7 @@ func TestWaveletTree_Rank(t *testing.T) {
 		},
 		{
 			name: "huffman quick fox",
-			wt:   NewHuffmanCodeWaveletTree("The quick brown fox jumps over the lazy dog"),
+			wt:   NewHuffmanCodeWaveletTree([]rune("The quick brown fox jumps over the lazy dog")),
 			args: args{
 				c:      's',
 				offset: 0,
@@ -353,7 +353,7 @@ func TestWaveletTree_Rank(t *testing.T) {
 		},
 		{
 			name: "huffman quick fox",
-			wt:   NewHuffmanCodeWaveletTree("The quick brown fox jumps over the lazy dog"),
+			wt:   NewHuffmanCodeWaveletTree([]rune("The quick brown fox jumps over the lazy dog")),
 			args: args{
 				c:      '@',
 				offset: 42,
@@ -387,7 +387,7 @@ func TestWaveletTree_Select(t *testing.T) {
 	}{
 		{
 			name: "huffman quick fox",
-			wt:   NewHuffmanCodeWaveletTree("The quick brown fox jumps over the lazy dog"),
+			wt:   NewHuffmanCodeWaveletTree([]rune("The quick brown fox jumps over the lazy dog")),
 			args: args{
 				c:    ' ',
 				rank: 2,
@@ -396,7 +396,7 @@ func TestWaveletTree_Select(t *testing.T) {
 		},
 		{
 			name: "huffman quick fox",
-			wt:   NewHuffmanCodeWaveletTree("The quick brown fox jumps over the lazy dog"),
+			wt:   NewHuffmanCodeWaveletTree([]rune("The quick brown fox jumps over the lazy dog")),
 			args: args{
 				c:    'u',
 				rank: 0,
@@ -405,7 +405,7 @@ func TestWaveletTree_Select(t *testing.T) {
 		},
 		{
 			name: "huffman quick fox",
-			wt:   NewHuffmanCodeWaveletTree("The quick brown fox jumps over the lazy dog"),
+			wt:   NewHuffmanCodeWaveletTree([]rune("The quick brown fox jumps over the lazy dog")),
 			args: args{
 				c:    'u',
 				rank: 1,
@@ -414,7 +414,7 @@ func TestWaveletTree_Select(t *testing.T) {
 		},
 		{
 			name: "binarytree mississippi",
-			wt:   NewBalancedWaveletTree("mississippi"),
+			wt:   NewBalancedWaveletTree([]rune("mississippi")),
 			args: args{
 				c:    's',
 				rank: 0,
@@ -423,7 +423,7 @@ func TestWaveletTree_Select(t *testing.T) {
 		},
 		{
 			name: "binarytree mississippi",
-			wt:   NewBalancedWaveletTree("mississippi"),
+			wt:   NewBalancedWaveletTree([]rune("mississippi")),
 			args: args{
 				c:    's',
 				rank: 1,
@@ -432,7 +432,7 @@ func TestWaveletTree_Select(t *testing.T) {
 		},
 		{
 			name: "binarytree mississippi",
-			wt:   NewBalancedWaveletTree("mississippi"),
+			wt:   NewBalancedWaveletTree([]rune("mississippi")),
 			args: args{
 				c:    's',
 				rank: 3,
@@ -441,7 +441,7 @@ func TestWaveletTree_Select(t *testing.T) {
 		},
 		{
 			name: "huffman mississippi",
-			wt:   NewHuffmanCodeWaveletTree("mississippi"),
+			wt:   NewHuffmanCodeWaveletTree([]rune("mississippi")),
 			args: args{
 				c:    's',
 				rank: 3,

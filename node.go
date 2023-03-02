@@ -11,18 +11,18 @@ type Node struct {
 	parent *Node
 	left   *Node
 	right  *Node
-	value  *byte
+	value  *rune
 	vector *bitvector.BitVector
 }
 
-func newBitVectorFromBytes(data []byte, prefix prefixtree.Prefix, depth int) (vector *bitvector.BitVector, left, right []byte, ok bool) {
+func newBitVectorFromBytes(data []rune, prefix prefixtree.Prefix, depth int) (vector *bitvector.BitVector, left, right []rune, ok bool) {
 	ok = true
 	vector = bitvector.NewBitVector(len(data))
 	for i, entry := range data {
 
-		partitions, ko := prefix[rune(entry)]
+		partitions, ko := prefix[entry]
 		if !ko {
-			partitions = prefix.Append(rune(entry))
+			partitions = prefix.Append(entry)
 		}
 
 		if depth >= partitions.Length() {
@@ -33,15 +33,15 @@ func newBitVectorFromBytes(data []byte, prefix prefixtree.Prefix, depth int) (ve
 		c := partitions.Get(depth)
 		vector.Set(i, c)
 		if c {
-			right = append(right, byte(entry))
+			right = append(right, entry)
 		} else {
-			left = append(left, byte(entry))
+			left = append(left, entry)
 		}
 	}
 	return
 }
 
-func newNode(data []byte, prefix prefixtree.Prefix, parent *Node, depth int) *Node {
+func newNode(data []rune, prefix prefixtree.Prefix, parent *Node, depth int) *Node {
 
 	vector, left, right, ok := newBitVectorFromBytes(data, prefix, depth)
 
