@@ -53,9 +53,13 @@ func (wt *WaveletTree) Access(i int) rune {
 	return wt.root.Access(i)
 }
 
-func (wt *WaveletTree) Rank(c rune, offset int) int {
+func (wt *WaveletTree) Rank(c rune, offset int) (int, error) {
 	prefix := wt.prefix[c]
-	return wt.root.Rank(prefix, offset)
+	if prefix == nil {
+		return 0, fmt.Errorf("rune '%v' code %v not found in prefix", string(c), c)
+
+	}
+	return wt.root.Rank(prefix, offset), nil
 }
 
 func (wt *WaveletTree) Select(c rune, rank int) int {

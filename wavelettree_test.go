@@ -1,6 +1,7 @@
 package wavelettree
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/rossmerr/bitvector"
@@ -184,10 +185,11 @@ func TestWaveletTree_Rank(t *testing.T) {
 		offset int
 	}
 	tests := []struct {
-		name string
-		wt   *WaveletTree
-		args args
-		want int
+		name    string
+		wt      *WaveletTree
+		args    args
+		want    int
+		wantErr error
 	}{
 		{
 			name: "binarytree mississippi",
@@ -331,10 +333,32 @@ func TestWaveletTree_Rank(t *testing.T) {
 			},
 			want: 1,
 		},
+		{
+			name: "huffman quick fox",
+			wt:   NewHuffmanCodeWaveletTree("The quick brown fox jumps over the lazy dog"),
+			args: args{
+				c:      's',
+				offset: 42,
+			},
+			want: 1,
+		},
+		{
+			name: "huffman quick fox",
+			wt:   NewHuffmanCodeWaveletTree("The quick brown fox jumps over the lazy dog"),
+			args: args{
+				c:      '@',
+				offset: 42,
+			},
+			want:    0,
+			wantErr: fmt.Errorf("rune '@' code 64 not found in prefix"),
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := tt.wt.Rank(tt.args.c, tt.args.offset); got != tt.want {
+			got, err := tt.wt.Rank(tt.args.c, tt.args.offset)
+			if tt.wantErr != nil && err != nil && err.Error() != tt.wantErr.Error() {
+				t.Errorf("WaveletTree.Rank() Error = %v, want %v", got, tt.want)
+			} else if got != tt.want {
 				t.Errorf("WaveletTree.Rank() = %v, want %v", got, tt.want)
 			}
 		})
