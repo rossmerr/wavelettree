@@ -16,15 +16,14 @@ type Node struct {
 }
 
 func newBitVectorFromBytes(data []byte, prefix prefixtree.Prefix, depth int) (vector *bitvector.BitVector, left, right []byte, ok bool) {
-	return newBitVectorFromString(string(data), prefix, depth)
-}
-
-func newBitVectorFromString(s string, prefix prefixtree.Prefix, depth int) (vector *bitvector.BitVector, left, right []byte, ok bool) {
 	ok = true
-	vector = bitvector.NewBitVector(len(s))
-	for i, entry := range s {
+	vector = bitvector.NewBitVector(len(data))
+	for i, entry := range data {
 
-		partitions := prefix[entry]
+		partitions, ko := prefix[rune(entry)]
+		if !ko {
+			partitions = prefix.Append(rune(entry))
+		}
 
 		if depth >= partitions.Length() {
 			ok = false

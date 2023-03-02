@@ -346,6 +346,15 @@ func TestWaveletTree_Rank(t *testing.T) {
 			name: "huffman quick fox",
 			wt:   NewHuffmanCodeWaveletTree("The quick brown fox jumps over the lazy dog"),
 			args: args{
+				c:      's',
+				offset: 0,
+			},
+			want: 0,
+		},
+		{
+			name: "huffman quick fox",
+			wt:   NewHuffmanCodeWaveletTree("The quick brown fox jumps over the lazy dog"),
+			args: args{
 				c:      '@',
 				offset: 42,
 			},
