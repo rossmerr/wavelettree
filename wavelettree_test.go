@@ -191,6 +191,7 @@ func TestWaveletTree_Rank(t *testing.T) {
 		want    int
 		wantErr error
 	}{
+
 		{
 			name: "binarytree mississippi",
 			wt:   NewBalancedWaveletTree([]rune("mississippi")),
@@ -333,6 +334,17 @@ func TestWaveletTree_Rank(t *testing.T) {
 			},
 			want: 1,
 		},
+
+		{
+			name: "huffman quick fox",
+			wt:   NewHuffmanCodeWaveletTree([]rune("The quick brown fox jumps over the lazy dog")),
+			args: args{
+				c:      '@',
+				offset: 42,
+			},
+			want:    0,
+			wantErr: fmt.Errorf("rune '@' code 64 not found in prefix"),
+		},
 		{
 			name: "huffman quick fox",
 			wt:   NewHuffmanCodeWaveletTree([]rune("The quick brown fox jumps over the lazy dog")),
@@ -352,14 +364,22 @@ func TestWaveletTree_Rank(t *testing.T) {
 			want: 0,
 		},
 		{
-			name: "huffman quick fox",
-			wt:   NewHuffmanCodeWaveletTree([]rune("The quick brown fox jumps over the lazy dog")),
+			name: "BWT encoded huffman quick fox",
+			wt:   NewHuffmanCodeWaveletTree([]rune("\x03        Tabcdeeefghhijklmnoooopqrrstuuvwxyz")),
 			args: args{
-				c:      '@',
+				c:      's',
+				offset: 0,
+			},
+			want: 0,
+		},
+		{
+			name: "BWT encoded huffman quick fox",
+			wt:   NewHuffmanCodeWaveletTree([]rune("\x03        Tabcdeeefghhijklmnoooopqrrstuuvwxyz")),
+			args: args{
+				c:      's',
 				offset: 42,
 			},
-			want:    0,
-			wantErr: fmt.Errorf("rune '@' code 64 not found in prefix"),
+			want: 1,
 		},
 	}
 	for _, tt := range tests {
@@ -373,7 +393,6 @@ func TestWaveletTree_Rank(t *testing.T) {
 		})
 	}
 }
-
 func TestWaveletTree_Select(t *testing.T) {
 	type args struct {
 		c    rune
@@ -385,6 +404,7 @@ func TestWaveletTree_Select(t *testing.T) {
 		args args
 		want int
 	}{
+
 		{
 			name: "huffman quick fox",
 			wt:   NewHuffmanCodeWaveletTree([]rune("The quick brown fox jumps over the lazy dog")),
