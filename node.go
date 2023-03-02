@@ -20,10 +20,10 @@ func newBitVectorFromBytes(data []rune, prefix prefixtree.Prefix, depth int) (ve
 	vector = bitvector.NewBitVector(len(data))
 	for i, entry := range data {
 
-		partitions, ko := prefix[entry]
-		if !ko {
-			partitions = prefix.Append(entry)
-		}
+		partitions := prefix[entry]
+		// if !ko {
+		// 	partitions = prefix.Append(entry)
+		// }
 
 		if depth >= partitions.Length() {
 			ok = false
