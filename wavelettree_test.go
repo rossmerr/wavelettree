@@ -142,6 +142,30 @@ func TestWaveletTree_Access(t *testing.T) {
 			want: rune('i'),
 			wt:   NewHuffmanCodeWaveletTree("mississippi"),
 		},
+		{
+			name: "huffman quick fox",
+			i:    0,
+			want: rune('T'),
+			wt:   NewHuffmanCodeWaveletTree("The quick brown fox jumps over the lazy dog"),
+		},
+		{
+			name: "huffman quick fox",
+			i:    0,
+			want: rune('T'),
+			wt:   NewHuffmanCodeWaveletTree("The quick brown fox jumps over the lazy dog"),
+		},
+		{
+			name: "huffman quick fox",
+			i:    20,
+			want: rune('j'),
+			wt:   NewHuffmanCodeWaveletTree("The quick brown fox jumps over the lazy dog"),
+		},
+		{
+			name: "huffman quick fox",
+			i:    42,
+			want: rune('g'),
+			wt:   NewHuffmanCodeWaveletTree("The quick brown fox jumps over the lazy dog"),
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -280,6 +304,33 @@ func TestWaveletTree_Rank(t *testing.T) {
 			},
 			want: 2,
 		},
+		{
+			name: "huffman quick fox",
+			wt:   NewHuffmanCodeWaveletTree("The quick brown fox jumps over the lazy dog"),
+			args: args{
+				c:      'u',
+				offset: 42,
+			},
+			want: 2,
+		},
+		{
+			name: "huffman quick fox",
+			wt:   NewHuffmanCodeWaveletTree("The quick brown fox jumps over the lazy dog"),
+			args: args{
+				c:      ' ',
+				offset: 42,
+			},
+			want: 8,
+		},
+		{
+			name: "huffman quick fox",
+			wt:   NewHuffmanCodeWaveletTree("The quick brown fox jumps over the lazy dog"),
+			args: args{
+				c:      'u',
+				offset: 15,
+			},
+			want: 1,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -301,6 +352,42 @@ func TestWaveletTree_Select(t *testing.T) {
 		args args
 		want int
 	}{
+		{
+			name: "huffman quick fox",
+			wt:   NewHuffmanCodeWaveletTree("The quick brown fox jumps over the lazy dog"),
+			args: args{
+				c:    ' ',
+				rank: 2,
+			},
+			want: 15,
+		},
+		{
+			name: "huffman quick fox",
+			wt:   NewHuffmanCodeWaveletTree("The quick brown fox jumps over the lazy dog"),
+			args: args{
+				c:    'u',
+				rank: 0,
+			},
+			want: 5,
+		},
+		{
+			name: "huffman quick fox",
+			wt:   NewHuffmanCodeWaveletTree("The quick brown fox jumps over the lazy dog"),
+			args: args{
+				c:    'u',
+				rank: 1,
+			},
+			want: 21,
+		},
+		{
+			name: "binarytree mississippi",
+			wt:   NewBalancedWaveletTree("mississippi"),
+			args: args{
+				c:    's',
+				rank: 0,
+			},
+			want: 2,
+		},
 		{
 			name: "binarytree mississippi",
 			wt:   NewBalancedWaveletTree("mississippi"),
