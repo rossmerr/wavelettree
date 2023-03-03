@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/rossmerr/bitvector"
+	"github.com/rossmerr/wavelettree/prefixtree"
 )
 
 func TestWaveletTree_Access(t *testing.T) {
@@ -297,7 +298,7 @@ func TestWaveletTree_Rank(t *testing.T) {
 				vector := bitvector.NewBitVectorFromBool([]bool{false, false})
 				wt := &WaveletTree{
 					root:   root,
-					prefix: map[rune]*bitvector.BitVector{'i': vector},
+					prefix: prefixtree.NewPrefixFromMap(map[rune]*bitvector.BitVector{'i': vector}),
 				}
 				return wt
 			}(),
@@ -509,9 +510,9 @@ func TestWaveletTree_Select(t *testing.T) {
 				vector := bitvector.NewBitVectorFromBool([]bool{true, true})
 				wt := &WaveletTree{
 					root: root,
-					prefix: map[rune]*bitvector.BitVector{
+					prefix: prefixtree.NewPrefixFromMap(map[rune]*bitvector.BitVector{
 						's': vector,
-					},
+					}),
 				}
 				return wt
 			}(), args: args{

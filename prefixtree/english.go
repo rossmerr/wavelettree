@@ -2,7 +2,7 @@ package prefixtree
 
 import "sort"
 
-func English() Prefix {
+func English() *Prefix {
 	runeFrequencies := map[rune]int{
 		'A': 280937,
 		'B': 169474,

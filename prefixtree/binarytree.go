@@ -10,7 +10,7 @@ type BinaryTree struct {
 	Value *rune
 }
 
-func NewBinaryTree(value []rune) Prefix {
+func NewBinaryTree(value []rune) *Prefix {
 	runeFrequencies, keys := binaryCount(value)
 	binaryList := rankByBinaryCount(runeFrequencies, keys)
 	tree := buildBinaryTree(binaryList)
@@ -77,32 +77,38 @@ func (s *BinaryTree) isLeaf() bool {
 	return s.Value != nil
 }
 
-func (s *BinaryTree) prefix() Prefix {
-	prefix := Prefix{}
+func (s *BinaryTree) prefix() *Prefix {
+	prefix := NewPrefix()
 	left := s.Left
 	if left.isLeaf() {
 		vector := bitvector.NewBitVectorFromBool([]bool{false})
-		prefix[rune(*left.Value)] = vector
+		prefix.Append(*left.Value, vector)
+
 	} else {
 		m := left.prefix()
-
-		for r, v := range m {
+		iterator := m.Enumerate()
+		for iterator.HasNext() {
+			k, v, _ := iterator.Next()
 			vector := bitvector.NewBitVectorFromVectorPadStart(v, 1)
 			vector.Set(0, false)
-			prefix[r] = vector
+			prefix.Append(k, vector)
 		}
 	}
 
 	right := s.Right
 	if right.isLeaf() {
 		vector := bitvector.NewBitVectorFromBool([]bool{true})
-		prefix[rune(*right.Value)] = vector
+		prefix.Append(*right.Value, vector)
+
 	} else {
 		m := right.prefix()
-		for r, v := range m {
+
+		iterator := m.Enumerate()
+		for iterator.HasNext() {
+			k, v, _ := iterator.Next()
 			vector := bitvector.NewBitVectorFromVectorPadStart(v, 1)
 			vector.Set(0, true)
-			prefix[r] = vector
+			prefix.Append(k, vector)
 		}
 	}
 

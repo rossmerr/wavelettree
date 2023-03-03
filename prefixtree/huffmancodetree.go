@@ -13,14 +13,14 @@ type HuffmanCodeTree struct {
 	Frequency int
 }
 
-func NewHuffmanCodeTree(value []rune) Prefix {
+func NewHuffmanCodeTree(value []rune) *Prefix {
 	runeFrequencies, keys := frequencyCount(value)
 	huffmanList := rankByRuneCount(runeFrequencies, keys)
 	tree := buildHuffmanTree(huffmanList)
 	return tree.prefix()
 }
 
-func NewHuffmanCodeTreeFromFrequencies(runeFrequencies map[rune]int, keys []rune) Prefix {
+func NewHuffmanCodeTreeFromFrequencies(runeFrequencies map[rune]int, keys []rune) *Prefix {
 	huffmanList := rankByRuneCount(runeFrequencies, keys)
 	tree := buildHuffmanTree(huffmanList)
 	return tree.prefix()
@@ -30,31 +30,35 @@ func (s *HuffmanCodeTree) isLeaf() bool {
 	return s.Value != nil
 }
 
-func (s *HuffmanCodeTree) prefix() Prefix {
-	prefix := Prefix{}
+func (s *HuffmanCodeTree) prefix() *Prefix {
+	prefix := NewPrefix()
 	left := s.Left
 	if left.isLeaf() {
 		vector := bitvector.NewBitVectorFromBool([]bool{false})
-		prefix[*left.Value] = vector
+		prefix.Append(*left.Value, vector)
 	} else {
 		m := left.prefix()
-		for k, v := range m {
+		iterator := m.Enumerate()
+		for iterator.HasNext() {
+			k, v, _ := iterator.Next()
 			vector := bitvector.NewBitVectorFromVectorPadStart(v, 1)
 			vector.Set(0, false)
-			prefix[k] = vector
+			prefix.Append(k, vector)
 		}
 	}
 
 	right := s.Right
 	if right.isLeaf() {
 		vector := bitvector.NewBitVectorFromBool([]bool{true})
-		prefix[*right.Value] = vector
+		prefix.Append(*right.Value, vector)
 	} else {
 		m := right.prefix()
-		for k, v := range m {
+		iterator := m.Enumerate()
+		for iterator.HasNext() {
+			k, v, _ := iterator.Next()
 			vector := bitvector.NewBitVectorFromVectorPadStart(v, 1)
 			vector.Set(0, true)
-			prefix[k] = vector
+			prefix.Append(k, vector)
 		}
 	}
 

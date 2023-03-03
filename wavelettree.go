@@ -8,11 +8,11 @@ import (
 
 type WaveletTree struct {
 	root   *Node
-	prefix prefixtree.Prefix
+	prefix *prefixtree.Prefix
 	n      int // Length of the root bitvector
 }
 
-func NewWaveletTree(value []rune, prefix prefixtree.Prefix) *WaveletTree {
+func NewWaveletTree(value []rune, prefix *prefixtree.Prefix) *WaveletTree {
 	root := newNode(value, prefix, nil, 0)
 	tree := &WaveletTree{
 		root:   root,
@@ -54,7 +54,7 @@ func (wt *WaveletTree) Access(i int) rune {
 }
 
 func (wt *WaveletTree) Rank(c rune, offset int) (int, error) {
-	prefix := wt.prefix[c]
+	prefix := wt.prefix.Get(c)
 	if prefix == nil {
 		return 0, fmt.Errorf("rune '%v' code %v not found in prefix", string(c), c)
 
@@ -63,7 +63,7 @@ func (wt *WaveletTree) Rank(c rune, offset int) (int, error) {
 }
 
 func (wt *WaveletTree) Select(c rune, rank int) int {
-	prefix := wt.prefix[c]
+	prefix := wt.prefix.Get(c)
 	start := wt.root.Walk(prefix)
 
 	return start.Select(prefix, rank)
