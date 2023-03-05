@@ -6,14 +6,16 @@ import (
 	"github.com/rossmerr/wavelettree/prefixtree"
 )
 
+// WaveletTree is a succinct data structure to store strings in compressed space.
 type WaveletTree struct {
-	root   *Node
+	root   *node
 	prefix *prefixtree.Prefix
 	n      int // Length of the root bitvector
 }
 
 func NewWaveletTree(value []rune, prefix *prefixtree.Prefix) *WaveletTree {
-	root := newNode(value, prefix, nil, 0)
+
+	root := buildNode(value, prefix)
 	tree := &WaveletTree{
 		root:   root,
 		prefix: prefix,
@@ -25,7 +27,7 @@ func NewWaveletTree(value []rune, prefix *prefixtree.Prefix) *WaveletTree {
 
 func NewBalancedWaveletTree(value []rune) *WaveletTree {
 	prefix := prefixtree.NewBinaryTree(value)
-	root := newNode(value, prefix, nil, 0)
+	root := buildNode(value, prefix)
 	tree := &WaveletTree{
 		root:   root,
 		prefix: prefix,
@@ -38,7 +40,7 @@ func NewBalancedWaveletTree(value []rune) *WaveletTree {
 func NewHuffmanCodeWaveletTree(value []rune) *WaveletTree {
 	prefix := prefixtree.NewHuffmanCodeTree(value)
 
-	root := newNode(value, prefix, nil, 0)
+	root := buildNode(value, prefix)
 
 	tree := &WaveletTree{
 		root:   root,
@@ -49,10 +51,12 @@ func NewHuffmanCodeWaveletTree(value []rune) *WaveletTree {
 	return tree
 }
 
-func (wt *WaveletTree) Access(i int) rune {
-	return wt.root.Access(i)
+// Access gets the run at the index.
+func (wt *WaveletTree) Access(index int) rune {
+	return wt.root.Access(index)
 }
 
+// Rank counts the number of times the rune occurs up to but not including the offset.
 func (wt *WaveletTree) Rank(c rune, offset int) (int, error) {
 	prefix := wt.prefix.Get(c)
 	if prefix == nil {
@@ -62,6 +66,7 @@ func (wt *WaveletTree) Rank(c rune, offset int) (int, error) {
 	return wt.root.Rank(prefix, offset), nil
 }
 
+// Select returns the index of the rune with the given rank
 func (wt *WaveletTree) Select(c rune, rank int) int {
 	prefix := wt.prefix.Get(c)
 	start := wt.root.Walk(prefix)

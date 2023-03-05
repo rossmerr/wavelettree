@@ -277,20 +277,20 @@ func TestWaveletTree_Rank(t *testing.T) {
 		{
 			name: "00110110110",
 			wt: func() *WaveletTree {
-				root := &Node{
+				root := &node{
 					vector: func() *bitvector.BitVector {
 						vector := bitvector.NewBitVectorFromBool([]bool{false, false, true, true, false, true, true, false, true, true, false})
 						return vector
 					}(),
 				}
-				level1 := &Node{
+				level1 := &node{
 					vector: func() *bitvector.BitVector {
 						vector := bitvector.NewBitVectorFromBool([]bool{true, false, false, false, false})
 						return vector
 					}(),
 					parent: root,
 				}
-				level2 := &Node{
+				level2 := &node{
 					parent: level1,
 				}
 				level1.left = level2
@@ -489,20 +489,20 @@ func TestWaveletTree_Select(t *testing.T) {
 		{
 			name: "00110110110",
 			wt: func() *WaveletTree {
-				root := &Node{
+				root := &node{
 					vector: func() *bitvector.BitVector {
 						vector := bitvector.NewBitVectorFromBool([]bool{false, false, true, true, false, true, true, false, true, true, false})
 						return vector
 					}(),
 				}
-				level1 := &Node{
+				level1 := &node{
 					vector: func() *bitvector.BitVector {
 						vector := bitvector.NewBitVectorFromBool([]bool{true, true, true, true, false, false})
 						return vector
 					}(),
 					parent: root,
 				}
-				level2 := &Node{
+				level2 := &node{
 					parent: level1,
 				}
 				level1.right = level2

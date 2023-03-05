@@ -7,24 +7,27 @@ import (
 	"github.com/rossmerr/wavelettree/prefixtree"
 )
 
-type Node struct {
-	parent *Node
-	left   *Node
-	right  *Node
+type node struct {
+	parent *node
+	left   *node
+	right  *node
 	value  *rune
 	vector *bitvector.BitVector
 }
 
-func newBitVectorFromBytes(data []rune, prefix *prefixtree.Prefix, depth int) (vector *bitvector.BitVector, left, right []rune, ok bool) {
-	ok = true
-	vector = bitvector.NewBitVector(len(data))
+func buildNode(data []rune, prefix *prefixtree.Prefix) *node {
+	return buildChildNode(data, prefix, nil, 0)
+}
+func buildChildNode(data []rune, prefix *prefixtree.Prefix, parent *node, depth int) *node {
+	vector := bitvector.NewBitVector(len(data))
+	left, right := []rune{}, []rune{}
+
 	for i, entry := range data {
 
 		partitions := prefix.Get(entry)
 
 		if depth >= partitions.Length() {
-			ok = false
-			return
+			return nil
 		}
 
 		c := partitions.Get(depth)
@@ -35,29 +38,19 @@ func newBitVectorFromBytes(data []rune, prefix *prefixtree.Prefix, depth int) (v
 			left = append(left, entry)
 		}
 	}
-	return
-}
 
-func newNode(data []rune, prefix *prefixtree.Prefix, parent *Node, depth int) *Node {
-
-	vector, left, right, ok := newBitVectorFromBytes(data, prefix, depth)
-
-	if !ok {
-		return nil
-	}
-
-	t := &Node{
+	t := &node{
 		vector: vector,
 		parent: parent,
 	}
 
 	if len(left) > 0 {
-		n := newNode(left, prefix, t, depth+1)
+		n := buildChildNode(left, prefix, t, depth+1)
 
 		if n != nil {
 			t.left = n
 		} else {
-			t.left = &Node{
+			t.left = &node{
 				value:  &left[0],
 				parent: t,
 			}
@@ -65,12 +58,12 @@ func newNode(data []rune, prefix *prefixtree.Prefix, parent *Node, depth int) *N
 
 	}
 	if len(right) > 0 {
-		n := newNode(right, prefix, t, depth+1)
+		n := buildChildNode(right, prefix, t, depth+1)
 
 		if n != nil {
 			t.right = n
 		} else {
-			t.right = &Node{
+			t.right = &node{
 				value:  &right[0],
 				parent: t,
 			}
@@ -79,15 +72,15 @@ func newNode(data []rune, prefix *prefixtree.Prefix, parent *Node, depth int) *N
 	return t
 }
 
-func (t *Node) Length() int {
+func (t *node) Length() int {
 	return t.vector.Length()
 }
 
-func (t *Node) isLeaf() bool {
+func (t *node) isLeaf() bool {
 	return t.vector == nil
 }
 
-func (t *Node) Access(i int) rune {
+func (t *node) Access(i int) rune {
 	if t.isLeaf() {
 		return rune(*t.value)
 	}
@@ -103,7 +96,7 @@ func (t *Node) Access(i int) rune {
 	}
 }
 
-func (t *Node) Rank(prefix *bitvector.BitVector, offset int) int {
+func (t *node) Rank(prefix *bitvector.BitVector, offset int) int {
 
 	c := prefix.Get(0)
 
@@ -123,7 +116,7 @@ func (t *Node) Rank(prefix *bitvector.BitVector, offset int) int {
 	}
 }
 
-func (t *Node) Walk(prefix *bitvector.BitVector) *Node {
+func (t *node) Walk(prefix *bitvector.BitVector) *node {
 
 	if t.isLeaf() {
 		return t
@@ -143,7 +136,7 @@ func (t *Node) Walk(prefix *bitvector.BitVector) *Node {
 	}
 }
 
-func (t *Node) Select(prefix *bitvector.BitVector, rank int) int {
+func (t *node) Select(prefix *bitvector.BitVector, rank int) int {
 
 	if t.isLeaf() {
 		return t.parent.Select(prefix, rank)
@@ -163,7 +156,7 @@ func (t *Node) Select(prefix *bitvector.BitVector, rank int) int {
 
 }
 
-func (t Node) String() string {
+func (t node) String() string {
 	str := ""
 	if t.left != nil {
 		str += fmt.Sprintf(" left: %s", t.left)
